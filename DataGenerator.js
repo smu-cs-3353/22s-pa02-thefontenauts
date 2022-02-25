@@ -50,8 +50,7 @@ function createOutput(arr, file) {
 
 const random = new(require('chance'));
 const fs = require('fs');
-//let sizes = [10000, 50000, 100000, 500000, 1000000, 10000000]
-let sizes = [5, 10];
+let sizes = [10000, 50000, 100000, 500000, 1000000, 10000000]
 for (let i = 0; i < 2; i++) {
     if (i == 0) {
         console.log("Generating integer data sets...");
