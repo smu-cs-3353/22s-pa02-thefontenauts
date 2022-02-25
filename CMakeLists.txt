@@ -12,4 +12,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 # Create the executable for sorting
 
-add_executable(PA02 src/main.cpp)
+add_executable(PA02 src/main.cpp src/FileManager.cpp src/FileManager.h)
