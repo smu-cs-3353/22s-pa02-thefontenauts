@@ -8,11 +8,13 @@
 #include <unistd.h>
 using namespace std;
 
-void FileManager::getFiles() {
+void FileManager::getFiles(char* folder) {
     char* p = new char[256];
     getcwd(p, 256);
     string path = p;
-    path += "/input/";
+    path += "/";
+    path += folder;
+    cout << path << endl;
     delete[] p;
     DIR* dr;
     struct dirent* en;

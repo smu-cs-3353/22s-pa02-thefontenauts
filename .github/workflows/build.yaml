@@ -4,8 +4,8 @@ on: [push]
 
 env:
   EXE_NAME: PA02
-  #INPUT_FILES:
-  #OUTPUT_FILES: example-bruteforce.txt example-highvalue.txt example-custom.txt
+  INPUT_FILES: input/
+  OUTPUT_FILES: sorting.csv
 
 jobs:
   build:
@@ -48,21 +48,21 @@ jobs:
       - name: Run the project
         working-directory: ${{runner.workspace}}/build
         shell: bash
-        #run: ./$EXE_NAME $INPUT_FILES
-        run: ./$EXE_NAME
+        run: ./$EXE_NAME $INPUT_FILES
+        #run: ./$EXE_NAME
 
-      #- name: Copy output files to artifact directory
-      #  working-directory: ${{runner.workspace}}/build
-      #  run: |
-      #    mkdir artifacts
-      #    for f in $OUTPUT_FILES
-      #    do
-      #    echo "  Copying $f"
-      #    cp $f artifacts/
-      #    done
+      - name: Copy output files to artifact directory
+        working-directory: ${{runner.workspace}}/build
+        run: |
+          mkdir artifacts
+          for f in $OUTPUT_FILES
+          do
+          echo "  Copying $f"
+          cp $f artifacts/
+          done
 
-      #- name: Upload output files to GitHub so they can be reviewed
-      #  uses: actions/upload-artifact@v1
-      #  with:
-      #    name: project_output
-      #    path: ${{runner.workspace}}/build/artifacts
+      - name: Upload output files to GitHub so they can be reviewed
+        uses: actions/upload-artifact@v1
+        with:
+          name: project_output
+          path: ${{runner.workspace}}/build/artifacts

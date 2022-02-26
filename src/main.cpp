@@ -11,7 +11,9 @@ using namespace std;
 
 int main(int argc, char** argv) {
     cout << "Segmentation fault" << endl;
-    FileManager fm;
-    fm.getFiles();
+    if (argc == 2) {
+        FileManager fm;
+        fm.getFiles(argv[1]);
+    }
     return 0;
 }
