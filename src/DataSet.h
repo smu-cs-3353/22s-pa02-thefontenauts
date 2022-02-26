@@ -20,7 +20,15 @@ public:
     bool getIsInt();
     string& getType();
 
-    friend ostream& operator<<(ostream& out, const DataSet<T>&);
+    friend ostream& operator<<(ostream& out, const DataSet& rhs) {
+        if (rhs.isInt) {
+            out << "int,";
+        } else {
+            out << "string,";
+        }
+        out << rhs.size << "," << rhs.type << ",";
+        return out;
+    }
 };
 
 template <typename T>
@@ -53,17 +61,6 @@ bool DataSet<T>::getIsInt() {
 template <typename T>
 string& DataSet<T>::getType() {
     return type;
-}
-
-template <typename T>
-ostream& operator<<(ostream& out, const DataSet<T>& rhs) {
-    if (rhs.getIsInt()) {
-        out << "int,";
-    } else {
-        out << "string,";
-    }
-    out << rhs.getSize() << "," << rhs.getType();
-    return out;
 }
 
 #endif //PA02_DATASET_H
