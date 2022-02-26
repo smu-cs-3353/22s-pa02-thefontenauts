@@ -2,7 +2,7 @@
 ## The Fontenauts - Wes Anderson and Ryan Schaefer
 
 ## The Problem
-For this project we were tasked with implementing multiple algorithms to put pictures on a wall for an art gallery. The art gallery has provided dimensions for the display wall as well as their collection of paintings with dimensions and prices included. The art gallery asked us to find the ordering of paintings that puts the most value on the wall. The algorithms we implemented were a brute force algorithm to test all possible combinations of paintings, a highest price first algorithm to put paintings on the wall in price descending order, and a custom algorithm that runs faster than the brute force but puts more value on the wall than the highest price. 
+ 
 
 ## Building and Running the Program
 Step 1: Navigate to the Working Directory
