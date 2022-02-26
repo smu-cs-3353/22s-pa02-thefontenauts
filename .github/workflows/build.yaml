@@ -19,7 +19,6 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Executable name Environment Variable
-      - Check
         run: |
           echo $EXE_NAME
           echo " "

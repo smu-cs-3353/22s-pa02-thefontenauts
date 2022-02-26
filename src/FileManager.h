@@ -3,16 +3,20 @@
 
 #include <vector>
 #include <fstream>
+#include "DataSet.h"
 using namespace std;
 
 class FileManager {
 private:
     vector<string> files;
-    vector<string> sList;
-    vector<int> iList;
+    vector<DataSet<int>> iData;
+    vector<DataSet<string>> sData;
 public:
     FileManager() = default;
 
+    void getFiles();
+    void readFiles();
+    void createOutput();
 };
 
 

@@ -5,10 +5,13 @@
  */
 
 #include <iostream>
+#include "FileManager.h"
 using namespace std;
 
 
 int main(int argc, char** argv) {
     cout << "Segmentation fault" << endl;
-    return 1;
+    FileManager fm;
+    fm.getFiles();
+    return 0;
 }
