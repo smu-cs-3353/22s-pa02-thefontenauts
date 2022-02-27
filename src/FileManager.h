@@ -9,8 +9,8 @@ using namespace std;
 class FileManager {
 private:
     vector<string> files;
-    vector<DataSet<int>> iData;
-    vector<DataSet<string>> sData;
+    vector<DataSet<int> > iData;
+    vector<DataSet<string> > sData;
 public:
     FileManager() = default;
 

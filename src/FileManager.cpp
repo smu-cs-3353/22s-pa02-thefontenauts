@@ -1,11 +1,8 @@
-//
-// Created by Ryan Schaefer on 2/25/22.
-//
-
 #include "FileManager.h"
 #include <iostream>
 #include <dirent.h>
 #include <unistd.h>
+#include "Algorithms.h"
 using namespace std;
 
 void FileManager::getFiles(char* folder) {
@@ -85,11 +82,27 @@ void FileManager::readFiles() {
 void FileManager::createOutput() {
     ofstream output;
     output.open("sorting.csv");
+    output << "var_type,size,format,insertion_time,quick_time,merge_time,shell_time,intro_time,tim_time" << endl;
+    Algorithms<int> intSort;
     for (DataSet<int>& ds : iData) {
-        output << ds << endl;
+        output << ds;
+        output << intSort.insertionSort(ds.getData()).count() << ",";
+        output << intSort.quickSort(ds.getData()).count() << ",";
+        output << intSort.mergeSort(ds.getData()).count() << ",";
+        output << intSort.shellSort(ds.getData()).count() << ",";
+        output << intSort.introSort(ds.getData()).count() << ",";
+        output << intSort.timSort(ds.getData()).count() << endl;
+
     }
+    Algorithms<string> stringSort;
     for (DataSet<string>& ds : sData) {
-        output << ds << endl;
+        output << ds;
+        output << stringSort.insertionSort(ds.getData()).count() << ",";
+        output << stringSort.quickSort(ds.getData()).count() << ",";
+        output << stringSort.mergeSort(ds.getData()).count() << ",";
+        output << stringSort.shellSort(ds.getData()).count() << ",";
+        output << stringSort.introSort(ds.getData()).count() << ",";
+        output << stringSort.timSort(ds.getData()).count() << endl;
     }
     output.close();
 }
