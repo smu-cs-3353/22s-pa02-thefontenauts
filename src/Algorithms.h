@@ -11,11 +11,20 @@ public:
     Algorithms() = default;
 
     std::chrono::duration<double> insertionSort(vector<T>);
-    std::chrono::duration<double> quickSort(vector<T>);
     std::chrono::duration<double> mergeSort(vector<T>);
     std::chrono::duration<double> shellSort(vector<T>);
     std::chrono::duration<double> introSort(vector<T>);
     std::chrono::duration<double> timSort(vector<T>);
+
+
+
+    //Quick Sort functions
+    std::chrono::duration<double> quickSort(vector<T>, int, int);
+    void swap(T*, T*);
+    int partition(vector<T>, int, int);
+
+
+
 
     bool isSorted(vector<T>&);
 };
@@ -42,19 +51,19 @@ std::chrono::duration<double> Algorithms<T>::insertionSort(vector<T> data) {
     }
 }
 
-template <typename T>
-std::chrono::duration<double> Algorithms<T>::quickSort(vector<T> data) {
-    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-    start = std::chrono::high_resolution_clock::now();
-
-    end = std::chrono::high_resolution_clock::now();
-    if (isSorted(data)) {
-        return end - start;
-    } else {
-        cout << "Quick sort failed" << endl;
-        exit(1);
-    }
-}
+//template <typename T>
+//std::chrono::duration<double> Algorithms<T>::quickSort(vector<T> data) {
+//    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+//    start = std::chrono::high_resolution_clock::now();
+//
+//    end = std::chrono::high_resolution_clock::now();
+//    if (isSorted(data)) {
+//        return end - start;
+//    } else {
+//        cout << "Quick sort failed" << endl;
+//        exit(1);
+//    }
+//}
 
 template <typename T>
 std::chrono::duration<double> Algorithms<T>::mergeSort(vector<T> data) {
@@ -120,6 +129,56 @@ bool Algorithms<T>::isSorted(vector<T>& data) {
         }
     }
     return true;
+}
+
+
+//Quick Sort Stuffs
+
+std::chrono::duration<double> quickSort(vector<T> vec, int low, int high)
+{
+    std::chrono::time_point<chrono::high_resolution_clock> start, end;
+    start = chrono::high_resolution_clock::now();
+
+    if (low < high)
+    {
+        /* pi is partitioning index, arr[p] is now
+		at right place */
+        int pivot = partition(vec, low, high);
+
+        // Separately sort elements before
+        // partition and after partition
+        quickSort(vec, low, pivot - 1);
+        quickSort(vec, pivot + 1, high);
+    }
+
+    end = chrono::high_resolution_clock::now();
+    return end - start;
+}
+
+void swap(T* a, T* b)
+{
+    T temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(vector<T> vec, int low, int high)
+{
+    //Need to randomize the pivot
+    T pivot = vec[high]; // pivot
+    int i = (low - 1); // Index of smaller element and indicates the right position of pivot found so far
+
+    for (int j = low; j <= high - 1; j++)
+    {
+        // If current element is smaller than the pivot
+        if (vec[j] > pivot)
+        {
+            i++; // increment index of smaller element
+            swap(&vec[i], &vec[j]);
+        }
+    }
+    swap(&vec[i + 1], &vec[high]);
+    return (i + 1);
 }
 
 #endif //PA02_ALGORITHMS_H
