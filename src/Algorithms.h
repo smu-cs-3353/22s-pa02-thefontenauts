@@ -12,7 +12,7 @@ public:
 
     std::chrono::duration<double> insertionSort(vector<T>);
     std::chrono::duration<double> quickSort(vector<T>);
-    std::chrono::duration<double> mergeSortCall(vector<T>);
+    std::chrono::duration<double> mergeSort(vector<T>);
     std::chrono::duration<double> shellSort(vector<T>);
     std::chrono::duration<double> introSort(vector<T>);
     std::chrono::duration<double> timSort(vector<T>);
@@ -61,7 +61,7 @@ std::chrono::duration<double> Algorithms<T>::quickSort(vector<T> data) {
 }
 
 template <typename T>
-std::chrono::duration<double> Algorithms<T>::mergeSortCall(vector<T> data) {
+std::chrono::duration<double> Algorithms<T>::mergeSort(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
 
@@ -124,9 +124,9 @@ vector<T> Algorithms<T>::mergeSort(vector<T>& data, int start, int end) {
     if (start != end) {
         int half = ((end - start) / 2) + start;
         vector<T> first(data.begin() + start, data.begin() + half);
-        mergeSort(start, half);
+        mergeSort(first, start, half);
         vector<T> second(data.begin() + half, data.begin() + end);
-        mergeSort(half, end);
+        mergeSort(second, half, end);
         return merge(first, second);
     }
 }

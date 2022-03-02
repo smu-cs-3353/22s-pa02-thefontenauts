@@ -88,7 +88,7 @@ void FileManager::createOutput() {
         output << intSort.insertionSort(ds.getData()).count() << ",";
         output << intSort.quickSort(ds.getData()).count() << ",";
         //output << intSort.mergeSortCall(ds.getData()).count() << ",";
-        output << intSort.mergeSortCall(ds.getData()).count() << ",";
+        output << intSort.mergeSort(ds.getData()).count() << ",";
         output << intSort.shellSort(ds.getData()).count() << ",";
         output << intSort.introSort(ds.getData()).count() << ",";
         output << intSort.timSort(ds.getData()).count() << endl;
