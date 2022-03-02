@@ -12,13 +12,13 @@ public:
 
     std::chrono::duration<double> insertionSort(vector<T>);
     std::chrono::duration<double> quickSort(vector<T>);
-    std::chrono::duration<double> mergeSort(vector<T>);
+    std::chrono::duration<double> mergeSortCall(vector<T>);
     std::chrono::duration<double> shellSort(vector<T>);
     std::chrono::duration<double> introSort(vector<T>);
     std::chrono::duration<double> timSort(vector<T>);
 
     // Merge Sort Functions
-    vector<T> mergeSort(vector<T>&, int, int);
+    vector<T> mergeSort(vector<T>&);
     vector<T> merge(vector<T>&, vector<T>&);
 
     bool isSorted(vector<T>&);
@@ -61,11 +61,11 @@ std::chrono::duration<double> Algorithms<T>::quickSort(vector<T> data) {
 }
 
 template <typename T>
-std::chrono::duration<double> Algorithms<T>::mergeSort(vector<T> data) {
+std::chrono::duration<double> Algorithms<T>::mergeSortCall(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
 
-    data = mergeSort(data, 0, data.size());
+    data = mergeSort(data);
 
     end = std::chrono::high_resolution_clock::now();
     if (isSorted(data)) {
@@ -120,14 +120,16 @@ std::chrono::duration<double> Algorithms<T>::timSort(vector<T> data) {
 
 // Merge Sort Functions
 template <typename T>
-vector<T> Algorithms<T>::mergeSort(vector<T>& data, int start, int end) {
-    if (start != end) {
-        int half = ((end - start) / 2) + start;
-        vector<T> first(data.begin() + start, data.begin() + half);
-        mergeSort(first, start, half);
-        vector<T> second(data.begin() + half, data.begin() + end);
-        mergeSort(second, half, end);
+vector<T> Algorithms<T>::mergeSort(vector<T>& data) {
+    if (data.size() > 1) {
+        int half = (data.size() / 2);
+        vector<T> first(data.begin(), data.begin() + half);
+        first = mergeSort(first);
+        vector<T> second(data.begin() + half, data.end());
+        second = mergeSort(second);
         return merge(first, second);
+    } else {
+        return data;
     }
 }
 
