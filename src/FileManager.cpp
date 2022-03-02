@@ -13,7 +13,7 @@ void FileManager::getFiles(char* folder) {
     path += folder;
     delete[] p;
     DIR* dr;
-    struct dirent* en;
+    dirent* en;
     dr = opendir(path.c_str());
     if (dr) {
         while ((en = readdir(dr)) != nullptr) {
@@ -87,7 +87,8 @@ void FileManager::createOutput() {
         output << ds;
         output << intSort.insertionSort(ds.getData()).count() << ",";
         output << intSort.quickSort(ds.getData()).count() << ",";
-        output << intSort.mergeSort(ds.getData()).count() << ",";
+        //output << intSort.mergeSortCall(ds.getData()).count() << ",";
+        output << intSort.mergeSortCall(ds.getData()).count() << ",";
         output << intSort.shellSort(ds.getData()).count() << ",";
         output << intSort.introSort(ds.getData()).count() << ",";
         output << intSort.timSort(ds.getData()).count() << endl;
