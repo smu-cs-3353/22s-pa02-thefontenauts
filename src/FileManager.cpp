@@ -11,7 +11,6 @@ void FileManager::getFiles(char* folder) {
     string path = p;
     path += "/";
     path += folder;
-    cout << path << endl;
     delete[] p;
     DIR* dr;
     struct dirent* en;
