@@ -1,21 +1,29 @@
 function noDuplicates(size, type, start) {
-    let arr;
     if (type == 0) {
-        let max = start + size - 1;
-        arr = random.unique(random.integer, size, {min: start, max: max});
+        if (start === 0) {
+            return mixArr([...Array(size).keys()]);
+        } else {
+            let temp = [...Array(size).keys()];
+            temp.forEach((val, index) => {
+                temp[index] = val + start;
+            });
+            return mixArr(temp);
+        }
     } else {
-        arr = random.unique(random.word, size);
+        return random.unique(random.word, size);
     }
-    return arr;
 }
 
-function sorted(size, type, start) {
-    let arr = noDuplicates(size, type, start).sort();
-    return arr;
+function sorted(size, type) {
+    if (type == 0) {
+        return [...Array(size).keys()];
+    } else {
+        return noDuplicates(size, type, 0).sort();
+    }
 }
 
 function sorted60(size, type) {
-    let arr1 = sorted(parseInt(size * 0.6), type, 0);
+    let arr1 = sorted(parseInt(size * 0.6), type);
     let arr2 = noDuplicates(parseInt(size * 0.4), type, parseInt(size * 0.6));
     let arr = arr1.concat(arr2);
     return arr;
@@ -37,6 +45,17 @@ function duplicates(size, type, percent) {
     return arr;
 } 
 
+function mixArr(array) {
+    let curr = array.length;
+    var index;
+    while (curr != 0) {
+        index = parseInt(Math.random() * curr);
+        curr--;
+        [array[curr], array[index]] = [array[index], array[curr]];
+    }
+    return array;
+}
+
 function createOutput(arr, file) {
     let text = "";
     arr.forEach(value => {
@@ -50,7 +69,9 @@ function createOutput(arr, file) {
 
 const random = new(require('chance'));
 const fs = require('fs');
-let sizes = [10000, 50000, 100000, 500000, 1000000, 10000000]
+let sizes = [5000, 10000, 50000, 100000, 500000, 1000000];
+//let sizes = [5000]
+//let sizes = [5, 10];
 for (let i = 0; i < 2; i++) {
     if (i == 0) {
         console.log("Generating integer data sets...");
@@ -83,7 +104,7 @@ for (let i = 0; i < 2; i++) {
         file = file.replace("20duplicates", "40duplicates");
         createOutput(duplicates(size, i, 0.4), file);
         console.log();
-    })
+    });
 }
 
 console.log("Done!");
