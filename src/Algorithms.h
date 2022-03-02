@@ -19,6 +19,7 @@ public:
 
 
     //Quick Sort functions
+    std::chrono::duration<double> quickSort_caller(vector<T>);
     std::chrono::duration<double> quickSort(vector<T>, int, int);
     void swap(T*, T*);
     int partition(vector<T>, int, int);
@@ -50,20 +51,6 @@ std::chrono::duration<double> Algorithms<T>::insertionSort(vector<T> data) {
         exit(1);
     }
 }
-
-//template <typename T>
-//std::chrono::duration<double> Algorithms<T>::quickSort(vector<T> data) {
-//    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
-//    start = std::chrono::high_resolution_clock::now();
-//
-//    end = std::chrono::high_resolution_clock::now();
-//    if (isSorted(data)) {
-//        return end - start;
-//    } else {
-//        cout << "Quick sort failed" << endl;
-//        exit(1);
-//    }
-//}
 
 template <typename T>
 std::chrono::duration<double> Algorithms<T>::mergeSort(vector<T> data) {
@@ -133,8 +120,23 @@ bool Algorithms<T>::isSorted(vector<T>& data) {
 
 
 //Quick Sort Stuffs
+template <typename T>
+std::chrono::duration<double> Algorithms<T>::quickSort_caller(vector<T> data) {
+    std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
+    start = std::chrono::high_resolution_clock::now();
 
-std::chrono::duration<double> quickSort(vector<T> vec, int low, int high)
+    quickSort(data,0,data.size()-1)
+
+    end = std::chrono::high_resolution_clock::now();
+    if (isSorted(data)) {
+        return end - start;
+    } else {
+        cout << "Quick sort failed" << endl;
+        exit(1);
+    }
+}
+
+void Algorithms<T>::quickSort(vector<T>& vec, int low, int high)
 {
     std::chrono::time_point<chrono::high_resolution_clock> start, end;
     start = chrono::high_resolution_clock::now();
@@ -155,14 +157,14 @@ std::chrono::duration<double> quickSort(vector<T> vec, int low, int high)
     return end - start;
 }
 
-void swap(T* a, T* b)
+void Algorithms<T>::swap(T* a, T* b)
 {
     T temp = *a;
     *a = *b;
     *b = temp;
 }
 
-int partition(vector<T> vec, int low, int high)
+int Algorithms<T>::partition(vector<T>& vec, int low, int high)
 {
     //Need to randomize the pivot
     T pivot = vec[high]; // pivot
