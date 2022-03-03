@@ -22,9 +22,9 @@ public:
 
     //Quick Sort functions
     std::chrono::duration<double> quickSort_caller(vector<T>);
-    std::chrono::duration<double> quickSort(vector<T>, int, int);
+    void quickSort(vector<T>&, int, int);
     void swap(T*, T*);
-    int partition(vector<T>, int, int);
+    int partition(vector<T>&, int, int);
 
 
 
@@ -127,7 +127,7 @@ std::chrono::duration<double> Algorithms<T>::quickSort_caller(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
 
-    quickSort(data,0,data.size()-1)
+    quickSort(data,0,data.size()-1);
 
     end = std::chrono::high_resolution_clock::now();
     if (isSorted(data)) {
@@ -138,6 +138,7 @@ std::chrono::duration<double> Algorithms<T>::quickSort_caller(vector<T> data) {
     }
 }
 
+template <typename T>
 void Algorithms<T>::quickSort(vector<T>& vec, int low, int high)
 {
 
@@ -154,6 +155,7 @@ void Algorithms<T>::quickSort(vector<T>& vec, int low, int high)
 }
 
 //swap 2 elements
+template <typename T>
 void Algorithms<T>::swap(T* a, T* b)
 {
     T temp = *a;
@@ -161,13 +163,14 @@ void Algorithms<T>::swap(T* a, T* b)
     *b = temp;
 }
 
+template <typename T>
 int Algorithms<T>::partition(vector<T>& vec, int low, int high)
 {
     //randomize the pivot then swap if not the last element
     srand (time(NULL));
     int pivot_loc = (rand() % (high - low)) + low;
     if(pivot_loc != high)
-        swap(&vec[high], vec[pivot_loc]);
+        swap(&vec[high], &vec[pivot_loc]);
 
     //make last element the pivot
     T pivot = vec[high];
