@@ -85,7 +85,8 @@ void FileManager::createOutput() {
     Algorithms<int> intSort;
     for (DataSet<int>& ds : iData) {
         output << ds;
-        output << intSort.insertionSort(ds.getData()).count() << ",";
+        DataSet<int> temp = ds;
+        output << intSort.insertionSort(temp.getData()).count() << ",";
         output << intSort.quickSort(ds.getData()).count() << ",";
         output << intSort.mergeSortCall(ds.getData()).count() << ",";
         output << intSort.shellSort(ds.getData()).count() << ",";
@@ -96,7 +97,8 @@ void FileManager::createOutput() {
     Algorithms<string> stringSort;
     for (DataSet<string>& ds : sData) {
         output << ds;
-        output << stringSort.insertionSort(ds.getData()).count() << ",";
+        DataSet<string> temp = ds;
+        output << stringSort.insertionSort(temp.getData()).count() << ",";
         output << stringSort.quickSort(ds.getData()).count() << ",";
         output << stringSort.mergeSortCall(ds.getData()).count() << ",";
         output << stringSort.shellSort(ds.getData()).count() << ",";
