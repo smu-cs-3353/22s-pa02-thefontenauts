@@ -220,7 +220,7 @@ int Algorithms<T>::partition(vector<T>& vec, int low, int high)
     for (int j = low; j <= high - 1; j++)
     {
         // If current element is smaller than the pivot
-        if (vec[j] > pivot)
+        if (vec[j] < pivot)
         {
             i++; // increment index of smaller element
             swap(&vec[i], &vec[j]);
