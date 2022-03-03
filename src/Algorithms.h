@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <chrono>
+#include <ctime>
+//#include <random>
 using namespace std;
 
 template <typename T>
@@ -138,25 +140,20 @@ std::chrono::duration<double> Algorithms<T>::quickSort_caller(vector<T> data) {
 
 void Algorithms<T>::quickSort(vector<T>& vec, int low, int high)
 {
-    std::chrono::time_point<chrono::high_resolution_clock> start, end;
-    start = chrono::high_resolution_clock::now();
 
     if (low < high)
     {
-        /* pi is partitioning index, arr[p] is now
-		at right place */
+        //Partition so that pivot is in the right spot
         int pivot = partition(vec, low, high);
 
-        // Separately sort elements before
-        // partition and after partition
+        //Recursive calls
         quickSort(vec, low, pivot - 1);
         quickSort(vec, pivot + 1, high);
     }
 
-    end = chrono::high_resolution_clock::now();
-    return end - start;
 }
 
+//swap 2 elements
 void Algorithms<T>::swap(T* a, T* b)
 {
     T temp = *a;
@@ -166,8 +163,14 @@ void Algorithms<T>::swap(T* a, T* b)
 
 int Algorithms<T>::partition(vector<T>& vec, int low, int high)
 {
-    //Need to randomize the pivot
-    T pivot = vec[high]; // pivot
+    //randomize the pivot then swap if not the last element
+    srand (time(NULL));
+    int pivot_loc = (rand() % (high - low)) + low;
+    if(pivot_loc != high)
+        swap(&vec[high], vec[pivot_loc]);
+
+    //make last element the pivot
+    T pivot = vec[high];
     int i = (low - 1); // Index of smaller element and indicates the right position of pivot found so far
 
     for (int j = low; j <= high - 1; j++)
