@@ -4,7 +4,7 @@
 #include <vector>
 #include <chrono>
 #include <ctime>
-//#include <random>
+#include <math.h>
 using namespace std;
 
 template <typename T>
@@ -12,15 +12,19 @@ class Algorithms {
 public:
     Algorithms() = default;
 
-    std::chrono::duration<double> insertionSort(vector<T>);
+
+    std::chrono::duration<double> insertionSort(vector<T>&);
     std::chrono::duration<double> shellSort(vector<T>);
     std::chrono::duration<double> introSort(vector<T>);
     std::chrono::duration<double> timSort(vector<T>);
 
     // Merge Sort Functions
     std::chrono::duration<double> mergeSortCall(vector<T>);
-    vector<T> mergeSort(vector<T>&);
+    vector<T> mergeSort(vector<T>);
     vector<T> merge(vector<T>&, vector<T>&);
+
+    // Intro Sort Functions
+    vector<T> introSort(vector<T>, int);
 
     //Quick Sort functions
     std::chrono::duration<double> quickSort_caller(vector<T>);
@@ -28,12 +32,11 @@ public:
     void swap(T*, T*);
     int partition(vector<T>&, int, int);
 
-
     bool isSorted(vector<T>&);
 };
 
 template <typename T>
-std::chrono::duration<double> Algorithms<T>::insertionSort(vector<T> data) {
+std::chrono::duration<double> Algorithms<T>::insertionSort(vector<T>& data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
     for (int i = 1; i < data.size(); i++) {
@@ -90,6 +93,9 @@ std::chrono::duration<double> Algorithms<T>::introSort(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
 
+    int depth = 2 * log(data.size());
+    data = introSort(data, depth);
+
     end = std::chrono::high_resolution_clock::now();
     if (isSorted(data)) {
         return end - start;
@@ -115,7 +121,7 @@ std::chrono::duration<double> Algorithms<T>::timSort(vector<T> data) {
 
 // Merge Sort Functions
 template <typename T>
-vector<T> Algorithms<T>::mergeSort(vector<T>& data) {
+vector<T> Algorithms<T>::mergeSort(vector<T> data) {
     if (data.size() > 1) {
         int half = (data.size() / 2);
         vector<T> first(data.begin(), data.begin() + half);
@@ -149,6 +155,28 @@ vector<T> Algorithms<T>::merge(vector<T>& first, vector<T>& second) {
         }
     }
     return merged;
+}
+
+// Intro Sort Functions
+template <typename T>
+vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
+    if (data.size() < 16) {
+        insertionSort(data);
+        return data;
+    } else if (depth == 0) {
+        make_heap(data.begin(), data.end());
+        sort_heap(data.begin(), data.end());
+        return data;
+    } else {
+        int part = partition(data, 0, data.size() - 1);
+        vector<T> first(data.begin(), data.begin() + part);
+        first = introSort(first, depth - 1);
+        vector<T> last(data.begin() + part + 1, data.end());
+        last = introSort(last, depth - 1);
+        first.push_back(data.at(part));
+        first.insert(first.end(), last.begin(), last.end());
+        return first;
+    }
 }
 
 template <typename T>
