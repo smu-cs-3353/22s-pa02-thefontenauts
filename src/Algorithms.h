@@ -32,7 +32,6 @@ public:
     void swap(T*, T*);
     int partition(vector<T>&, int, int);
 
-
     bool isSorted(vector<T>&);
 };
 
@@ -169,14 +168,12 @@ vector<T>& Algorithms<T>::introSort(vector<T>& data, int depth) {
         sort_heap(data.begin(), data.end());
         return data;
     } else {
-        //int pivot = data.at(0);
-        //swapValue(data, 0, data.size() - 1);
-        //int partition = quickSort(data);
-        vector<T> first(data.begin(), data.begin() + partition);
+        int part = partition(data, 0, data.size() - 1);
+        vector<T> first(data.begin(), data.begin() + part);
         first = introSort(first, depth - 1);
-        vector<T> last(data.begin() + partition + 1, data.end());
+        vector<T> last(data.begin() + part + 1, data.end());
         last = introSort(last, depth - 1);
-        first.push_back(data.at(partition));
+        first.push_back(data.at(part));
         first.insert(first.end(), last.begin(), last.end());
         return first;
     }
@@ -251,7 +248,7 @@ int Algorithms<T>::partition(vector<T>& vec, int low, int high)
     for (int j = low; j <= high - 1; j++)
     {
         // If current element is smaller than the pivot
-        if (vec[j] > pivot)
+        if (vec[j] < pivot)
         {
             i++; // increment index of smaller element
             swap(&vec[i], &vec[j]);
