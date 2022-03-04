@@ -20,11 +20,11 @@ public:
 
     // Merge Sort Functions
     std::chrono::duration<double> mergeSortCall(vector<T>);
-    vector<T>& mergeSort(vector<T>&);
-    vector<T>& merge(vector<T>&, vector<T>&);
+    vector<T> mergeSort(vector<T>);
+    vector<T> merge(vector<T>&, vector<T>&);
 
     // Intro Sort Functions
-    vector<T>& introSort(vector<T>&, int);
+    vector<T> introSort(vector<T>, int);
 
     //Quick Sort functions
     std::chrono::duration<double> quickSort_caller(vector<T>);
@@ -94,7 +94,7 @@ std::chrono::duration<double> Algorithms<T>::introSort(vector<T> data) {
     start = std::chrono::high_resolution_clock::now();
 
     int depth = 2 * log(data.size());
-    introSort(data, depth);
+    data = introSort(data, depth);
 
     end = std::chrono::high_resolution_clock::now();
     if (isSorted(data)) {
@@ -121,7 +121,7 @@ std::chrono::duration<double> Algorithms<T>::timSort(vector<T> data) {
 
 // Merge Sort Functions
 template <typename T>
-vector<T>& Algorithms<T>::mergeSort(vector<T>& data) {
+vector<T> Algorithms<T>::mergeSort(vector<T> data) {
     if (data.size() > 1) {
         int half = (data.size() / 2);
         vector<T> first(data.begin(), data.begin() + half);
@@ -135,7 +135,7 @@ vector<T>& Algorithms<T>::mergeSort(vector<T>& data) {
 }
 
 template <typename T>
-vector<T>& Algorithms<T>::merge(vector<T>& first, vector<T>& second) {
+vector<T> Algorithms<T>::merge(vector<T>& first, vector<T>& second) {
     int it1 = 0;
     int it2 = 0;
     vector<T> merged;
@@ -159,7 +159,7 @@ vector<T>& Algorithms<T>::merge(vector<T>& first, vector<T>& second) {
 
 // Intro Sort Functions
 template <typename T>
-vector<T>& Algorithms<T>::introSort(vector<T>& data, int depth) {
+vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
     if (data.size() < 16) {
         insertionSort(data);
         return data;
