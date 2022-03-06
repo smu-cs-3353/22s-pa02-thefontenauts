@@ -110,6 +110,32 @@ std::chrono::duration<double> Algorithms<T>::timSort(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
 
+    vector<vector<vector<T> > > sections(1);
+    int i;
+    for (i = 0; i < data.size(); i += 32) {
+        vector<T> temp(data.begin() + i, data.begin() + min(i + 32, int(data.size())));
+        insertionSort(temp);
+        sections.at(0).push_back(temp);
+    }
+
+    for (i = 0; i < sections.size(); i++) {
+        if (sections.at(i).size() == 1) {
+            break;
+        }
+        vector<vector<T> > curr;
+        int j;
+        for (j = 1; j < sections.at(i).size(); j += 2) {
+            vector<T> temp = merge(sections.at(i).at(j - 1), sections.at(i).at(j));
+            curr.push_back(temp);
+        }
+        if (j == sections.at(i).size()) {
+            vector<T> temp = sections.at(i).at(j - 1);
+            curr.push_back(temp);
+        }
+        sections.push_back(curr);
+    }
+    data = sections.at(sections.size() - 1).at(0);
+
     end = std::chrono::high_resolution_clock::now();
     if (isSorted(data)) {
         return end - start;
