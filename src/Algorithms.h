@@ -14,7 +14,6 @@ public:
 
 
     std::chrono::duration<double> insertionSort(vector<T>&);
-    std::chrono::duration<double> shellSort(vector<T>);
     std::chrono::duration<double> introSort(vector<T>);
     std::chrono::duration<double> timSort(vector<T>);
 
@@ -31,6 +30,10 @@ public:
     void quickSort(vector<T>&, int, int);
     void swap(T*, T*);
     int partition(vector<T>&, int, int);
+
+    //Shell Sort functions
+    std::chrono::duration<double> shellSort_caller(vector<T>);
+    void shellSort(vector<T>&);
 
     bool isSorted(vector<T>&);
 };
@@ -75,16 +78,35 @@ std::chrono::duration<double> Algorithms<T>::mergeSortCall(vector<T> data) {
 }
 
 template <typename T>
-std::chrono::duration<double> Algorithms<T>::shellSort(vector<T> data) {
+std::chrono::duration<double> Algorithms<T>::shellSort_caller(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
-
+    shellSort(data);
     end = std::chrono::high_resolution_clock::now();
     if (isSorted(data)) {
         return end - start;
     } else {
         cout << "Shell sort failed" << endl;
         exit(1);
+    }
+}
+
+template <typename T>
+void Algorithms<T>::shellSort(vector<T>& data)
+{
+    //Shell sort operates on the observation that insertion sort works more efficiently with semisorted data
+    //Shell sort does is it presorts some of the data so that when insertion sort is run on the subsets, it will function better
+    for (int gap = data.size()/2; gap > 0; gap /= 2)
+    {
+        for (int i = gap; i < data.size(); i += 1)
+        {
+            int temp = data[i];
+            int j;
+            //insertion sort
+            for (j = i; j >= gap && data[j - gap] > temp; j -= gap)
+                data[j] = data[j - gap];
+            data[j] = temp;
+        }
     }
 }
 
