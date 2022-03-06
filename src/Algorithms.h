@@ -113,12 +113,7 @@ std::chrono::duration<double> Algorithms<T>::timSort(vector<T> data) {
     vector<vector<vector<T> > > sections(1);
     int i;
     for (i = 0; i < data.size(); i += 32) {
-        vector<T> temp(data.begin() + i, data.begin() + i + 32);
-        insertionSort(temp);
-        sections.at(0).push_back(temp);
-    }
-    if (data.begin() + i + 32 != data.end()) {
-        vector<T> temp(data.begin() + i, data.end());
+        vector<T> temp(data.begin() + i, data.begin() + min(i + 32, int(data.size())));
         insertionSort(temp);
         sections.at(0).push_back(temp);
     }
