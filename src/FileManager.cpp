@@ -89,7 +89,7 @@ void FileManager::createOutput() {
         output << intSort.insertionSort(temp.getData()).count() << ",";
         output << intSort.quickSort_caller(ds.getData()).count() << ",";
         output << intSort.mergeSortCall(ds.getData()).count() << ",";
-        output << intSort.shellSort(ds.getData()).count() << ",";
+        output << intSort.shellSort_caller(ds.getData()).count() << ",";
         output << intSort.introSort(ds.getData()).count() << ",";
         output << intSort.timSort(ds.getData()).count() << endl;
     }
@@ -100,7 +100,7 @@ void FileManager::createOutput() {
         output << stringSort.insertionSort(temp.getData()).count() << ",";
         output << stringSort.quickSort_caller(ds.getData()).count() << ",";
         output << stringSort.mergeSortCall(ds.getData()).count() << ",";
-        output << stringSort.shellSort(ds.getData()).count() << ",";
+        output << stringSort.shellSort_caller(ds.getData()).count() << ",";
         output << stringSort.introSort(ds.getData()).count() << ",";
         output << stringSort.timSort(ds.getData()).count() << endl;
     }
