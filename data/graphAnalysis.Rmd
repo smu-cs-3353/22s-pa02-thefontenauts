@@ -1,0 +1,59 @@
+---
+title: "Program 2 Graph Analysis"
+author: "Ryan Schaefer and Wes Anderson"
+output: pdf_document
+---
+
+```{r}
+library(ggplot2)
+data = read.csv("sorting.csv")
+data
+```
+```{r}
+insertionTimes = aggregate(insertion_time ~ var_type + size, data = data, FUN = mean)
+ggplot(insertionTimes, aes(x = size, y = insertion_time, color = var_type)) + 
+  geom_line() + 
+  labs(title = "Insertion Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Insertion Sort Time") + 
+  guides(color = guide_legend(title = "Data Type"))
+```
+
+```{r}
+quickTimes = aggregate(quick_time ~ var_type + size, data = data, FUN = mean)
+ggplot(quickTimes, aes(x = size, y = quick_time, color = var_type)) + 
+  geom_line() + 
+  labs(title = "Quick Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Quick Sort Time") + 
+  guides(color = guide_legend(title = "Data Type"))
+```
+
+```{r}
+mergeTimes = aggregate(merge_time ~ var_type + size, data = data, FUN = mean)
+ggplot(mergeTimes, aes(x = size, y = merge_time, color = var_type)) + 
+  geom_line() + 
+  labs(title = "Merge Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Merge Sort Time") + 
+  guides(color = guide_legend(title = "Data Type"))
+```
+
+```{r}
+introTimes = aggregate(intro_time ~ var_type + size, data = data, FUN = mean)
+ggplot(introTimes, aes(x = size, y = intro_time, color = var_type)) + 
+  geom_line() + 
+  labs(title = "Intro Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Intro Sort Time") + 
+  guides(color = guide_legend(title = "Data Type"))
+```
+
+```{r}
+shellTimes = aggregate(shell_time ~ var_type + size, data = data, FUN = mean)
+ggplot(shellTimes, aes(x = size, y = shell_time, color = var_type)) + 
+  geom_line() + 
+  labs(title = "Shell Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Shell Sort Time") + 
+  guides(color = guide_legend(title = "Data Type"))
+```
+
+```{r}
+timTimes = aggregate(tim_time ~ var_type + size, data = data, FUN = mean)
+ggplot(timTimes, aes(x = size, y = tim_time, color = var_type)) + 
+  geom_line() + 
+  labs(title = "Tim Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Tim Sort Time") + 
+  guides(color = guide_legend(title = "Data Type"))
+```
+
