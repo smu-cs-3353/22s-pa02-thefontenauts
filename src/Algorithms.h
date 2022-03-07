@@ -100,7 +100,7 @@ void Algorithms<T>::shellSort(vector<T>& data)
     {
         for (int i = gap; i < data.size(); i += 1)
         {
-            int temp = data[i];
+            T temp = data[i];
             int j;
             //insertion sort
             for (j = i; j >= gap && data[j - gap] > temp; j -= gap)
