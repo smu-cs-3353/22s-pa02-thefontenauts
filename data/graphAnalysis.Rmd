@@ -16,7 +16,7 @@ data
 
 ## Insertion Sort
 ```{r}
-insertionTimes = aggregate(insertion_time ~ var_type + size + n2, data = data, FUN = mean)
+insertionTimes = aggregate(insertion_time ~ var_type + size + n2 + format, data = data, FUN = mean)
 ggplot(insertionTimes, aes(x = size, y = insertion_time, color = var_type)) + 
   geom_line() + 
   labs(title = "Insertion Sort Time By Data Set Size and Data Type", x = "n", y = "Insertion Sort Time") + 
@@ -52,12 +52,45 @@ ggplot(data=insertionStrings, aes(x=n2, y=insertion_time)) +
   geom_smooth(method="lm") +
   geom_point() +
   stat_regline_equation(label.x=0, label.y=7500) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=7000)
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=6500)
+```
+
+#### Subset By File Format
+```{r}
+insertionIntsNoDups = subset(insertionInts, format == "noDuplicates")
+insertionIntsSorted = subset(insertionInts, format == "sorted")
+insertionInts60Sorted = subset(insertionInts, format == "60sorted")
+insertionInts20Dups = subset(insertionInts, format == "20duplicates")
+insertionInts40Dups = subset(insertionInts, format == "40duplicates")
+```
+
+```{r}
+insertionStringsNoDups = subset(insertionStrings, format == "noDuplicates")
+insertionStringsSorted = subset(insertionStrings, format == "sorted")
+insertionStrings60Sorted = subset(insertionStrings, format == "60sorted")
+insertionStrings20Dups = subset(insertionStrings, format == "20duplicates")
+insertionStrings40Dups = subset(insertionStrings, format == "40duplicates")
+```
+
+#### File Format Comparisons With Integers
+```{r}
+ggplot(insertionInts, aes(x = size, y = insertion_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Insertion Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
+#### File Format Comparisons With Strings
+```{r}
+ggplot(insertionStrings, aes(x = size, y = insertion_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Insertion Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
 ```
 
 ## Quick Sort
 ```{r}
-quickTimes = aggregate(quick_time ~ var_type + size + nlogn, data = data, FUN = mean)
+quickTimes = aggregate(quick_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
 ggplot(quickTimes, aes(x = size, y = quick_time, color = var_type)) + 
   geom_line() + 
   labs(title = "Quick Sort Time By Data Set Size and Data Type", x = "n", y = "Quick Sort Time") + 
@@ -96,9 +129,25 @@ ggplot(data=quickStrings, aes(x=nlogn, y=quick_time)) +
   stat_cor(aes(label=..rr.label..), label.x=0, label.y=1.4)
 ```
 
+#### File Format Comparisons With Integers
+```{r}
+ggplot(quickInts, aes(x = size, y = quick_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Quick Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
+#### File Format Comparisons With Strings
+```{r}
+ggplot(quickStrings, aes(x = size, y = quick_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Quick Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
 ## Merge Sort
 ```{r}
-mergeTimes = aggregate(merge_time ~ var_type + size + nlogn, data = data, FUN = mean)
+mergeTimes = aggregate(merge_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
 ggplot(mergeTimes, aes(x = size, y = merge_time, color = var_type)) + 
   geom_line() + 
   labs(title = "Merge Sort Time By Data Set Size and Data Type", x = "n", y = "Merge Sort Time") + 
@@ -137,9 +186,25 @@ ggplot(data=mergeStrings, aes(x=nlogn, y=merge_time)) +
   stat_cor(aes(label=..rr.label..), label.x=0, label.y=5.5)
 ```
 
+#### File Format Comparisons With Integers
+```{r}
+ggplot(mergeInts, aes(x = size, y = merge_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Merge Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
+#### File Format Comparisons With Strings
+```{r}
+ggplot(mergeStrings, aes(x = size, y = merge_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Merge Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
 ## Shell Sort
 ```{r}
-shellTimes = aggregate(shell_time ~ var_type + size + nlogn, data = data, FUN = mean)
+shellTimes = aggregate(shell_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
 ggplot(shellTimes, aes(x = size, y = shell_time, color = var_type)) + 
   geom_line() + 
   labs(title = "Shell Sort Time By Data Set Size and Data Type", x = "n", y = "Shell Sort Time") + 
@@ -178,9 +243,25 @@ ggplot(data=shellStrings, aes(x=nlogn, y=shell_time)) +
   stat_cor(aes(label=..rr.label..), label.x=0, label.y=3.7)
 ```
 
+#### File Format Comparisons With Integers
+```{r}
+ggplot(shellInts, aes(x = size, y = shell_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Shell Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
+#### File Format Comparisons With Strings
+```{r}
+ggplot(shellStrings, aes(x = size, y = shell_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Shell Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
 ## Intro Sort
 ```{r}
-introTimes = aggregate(intro_time ~ var_type + size + nlogn, data = data, FUN = mean)
+introTimes = aggregate(intro_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
 ggplot(introTimes, aes(x = size, y = intro_time, color = var_type)) + 
   geom_line() + 
   labs(title = "Intro Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Intro Sort Time") + 
@@ -219,9 +300,25 @@ ggplot(data=introStrings, aes(x=nlogn, y=intro_time)) +
   stat_cor(aes(label=..rr.label..), label.x=0, label.y=3.7)
 ```
 
+#### File Format Comparisons With Integers
+```{r}
+ggplot(introInts, aes(x = size, y = intro_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Intro Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
+#### File Format Comparisons With Strings
+```{r}
+ggplot(introStrings, aes(x = size, y = intro_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Intro Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
 ## Tim Sort
 ```{r}
-timTimes = aggregate(tim_time ~ var_type + size + nlogn, data = data, FUN = mean)
+timTimes = aggregate(tim_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
 ggplot(timTimes, aes(x = size, y = tim_time, color = var_type)) + 
   geom_line() + 
   labs(title = "Tim Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Tim Sort Time") + 
@@ -258,4 +355,20 @@ ggplot(data=timStrings, aes(x=nlogn, y=tim_time)) +
   geom_point() +
   stat_regline_equation(label.x=0, label.y=4) +
   stat_cor(aes(label=..rr.label..), label.x=0, label.y=3.7)
+```
+
+#### File Format Comparisons With Integers
+```{r}
+ggplot(timInts, aes(x = size, y = tim_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Tim Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
+```
+
+#### File Format Comparisons With Strings
+```{r}
+ggplot(timStrings, aes(x = size, y = tim_time, color = format)) + 
+  geom_line() + 
+  labs(title = "Tim Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time") + 
+  guides(color = guide_legend(title = "File Format"))
 ```
