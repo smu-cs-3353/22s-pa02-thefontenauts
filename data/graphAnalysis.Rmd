@@ -236,3 +236,66 @@ ggplot(timStrings, aes(x = size, y = tim_time, color = format)) +
   guides(color = guide_legend(title = "File Format"))
 ```
 
+## Algorithm Comparison
+```{r}
+data2 = matrix(ncol = 5, nrow = 360)
+for (i in 1:6) {
+  for (j in 1:60) {
+    data2[i * j, 1] = data[j, 1]
+    data2[i * j, 2] = data[j, 2]
+    data2[i * j, 3] = data[j, 3]
+    data2[i * j, 4] = data[j, 3 + i]
+    if (i == 1) {
+      data2[i * j, 5] = "insertion"
+    } else if (i == 2) {
+      data2[i * j, 5] = "quick"
+    } else if (i == 3) {
+      data2[i * j, 5] = "merge"
+    } else if (i == 4) {
+      data2[i * j, 5] = "shell"
+    } else if (i == 5) {
+      data2[i * j, 5] = "intro"
+    } else {
+      data2[i * j, 5] = "tim"
+    }
+  }
+}
+data2 = data.frame(data2)
+colnames(data2) = c("var_type", "size", "format", "time", "algorithm")
+data2 = transform(data2, time = as.numeric(time))
+data2 = transform(data2, size = as.numeric(size))
+```
+
+```{r}
+integerData = subset(data2, var_type == "int")
+integerTimes = aggregate(time ~ algorithm + size, data = integerData, FUN = mean)
+ggplot(integerTimes, aes(x = size, y = time, color = algorithm)) + 
+  geom_line() + 
+  labs(title = "Mean Sort Time For Integer Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  guides(color = guide_legend(title = "Algorithm"))
+```
+
+```{r}
+integerTimes2 = subset(integerTimes, algorithm != "insertion")
+ggplot(integerTimes2, aes(x = size, y = time, color = algorithm)) + 
+  geom_line() + 
+  labs(title = "Mean Sort Time For Integer Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  guides(color = guide_legend(title = "Algorithm"))
+```
+
+```{r}
+stringData = subset(data2, var_type == "string")
+stringTimes = aggregate(time ~ algorithm + size, data = stringData, FUN = mean)
+ggplot(stringTimes, aes(x = size, y = time, color = algorithm)) + 
+  geom_line() + 
+  labs(title = "Mean Sort Time For String Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  guides(color = guide_legend(title = "Algorithm"))
+```
+
+```{r}
+stringTimes2 = subset(stringTimes, algorithm != "insertion")
+ggplot(stringTimes2, aes(x = size, y = time, color = algorithm)) + 
+  geom_line() + 
+  labs(title = "Mean Sort Time For String Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  guides(color = guide_legend(title = "Algorithm"))
+```
