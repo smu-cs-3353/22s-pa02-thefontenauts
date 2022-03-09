@@ -8,8 +8,7 @@ output: pdf_document
 ```{r}
 library(ggplot2)
 library(ggpubr)
-#data = read.csv("sorting.csv")
-data = read.csv("sorting2.csv")
+data = read.csv("WesDataRun1.csv")
 data$n2 = data$size ^ 2
 data$nlogn = log(data$size) * data$size
 data
@@ -20,9 +19,9 @@ data
 ```{r}
 insertionTimes = aggregate(insertion_time ~ var_type + size + n2 + format, data = data, FUN = mean)
 insertionTimes2 = aggregate(insertion_time ~ var_type + size + n2, data = data, FUN = mean)
-ggplot(insertionTimes2, aes(x = size, y = insertion_time, color = var_type)) + 
-  geom_line() + 
-  labs(title = "Mean Insertion Sort Time By Data Set Size and Data Type", x = "n", y = "Insertion Sort Time") + 
+ggplot(insertionTimes2, aes(x = size, y = insertion_time, color = var_type)) +
+  geom_line() +
+  labs(title = "Mean Insertion Sort Time By Data Set Size and Data Type", x = "n", y = "Insertion Sort Time") +
   guides(color = guide_legend(title = "Data Type"))
 ```
 
@@ -38,17 +37,17 @@ ggplot(insertionTimes, aes(x = size, y = insertion_time, color = var_type)) +
 
 ```{r}
 insertionInts = subset(insertionTimes, var_type == "int")
-ggplot(insertionInts, aes(x = size, y = insertion_time, color = format)) + 
-  geom_line() + 
-  labs(title = "Insertion Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") + 
+ggplot(insertionInts, aes(x = size, y = insertion_time, color = format)) +
+  geom_line() +
+  labs(title = "Insertion Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") +
   guides(color = guide_legend(title = "File Format"))
 ```
 
 ```{r}
 insertionStrings = subset(insertionTimes, var_type == "string")
-ggplot(insertionStrings, aes(x = size, y = insertion_time, color = format)) + 
-  geom_line() + 
-  labs(title = "Insertion Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") + 
+ggplot(insertionStrings, aes(x = size, y = insertion_time, color = format)) +
+  geom_line() +
+  labs(title = "Insertion Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") +
   guides(color = guide_legend(title = "File Format"))
 ```
 
