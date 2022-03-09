@@ -8,7 +8,8 @@ output: pdf_document
 ```{r}
 library(ggplot2)
 library(ggpubr)
-data = read.csv("sorting.csv")
+#data = read.csv("sorting.csv")
+data = read.csv("sorting2.csv")
 data$n2 = data$size ^ 2
 data$nlogn = log(data$size) * data$size
 data
