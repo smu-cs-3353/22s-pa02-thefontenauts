@@ -5,7 +5,7 @@
 #include "Algorithms.h"
 using namespace std;
 
-void FileManager::getFiles(char* folder) {
+void FileManager::getFiles(char* folder, char* runInsert) {
     char* p = new char[256];
     getcwd(p, 256);
     string path = p;
@@ -23,14 +23,14 @@ void FileManager::getFiles(char* folder) {
             }
         }
         closedir(dr);
-        readFiles();
+        readFiles(runInsert);
     } else {
         cout << "Failed to find input file directory" << endl;
         exit(1);
     }
 }
 
-void FileManager::readFiles() {
+void FileManager::readFiles(char* runInsert) {
     ifstream input;
     for (string& file : files) {
         string type;
@@ -75,10 +75,10 @@ void FileManager::readFiles() {
             cout << "Failed to open input/" + file << endl;
         }
     }
-    createOutput();
+    createOutput(runInsert);
 }
 
-void FileManager::createOutput() {
+void FileManager::createOutput(char* runInsert) {
     ofstream output;
     output.open("sorting.csv");
     output << "var_type,size,format,insertion_time,quick_time,merge_time,shell_time,intro_time,tim_time" << endl;
@@ -86,7 +86,10 @@ void FileManager::createOutput() {
     for (DataSet<int>& ds : iData) {
         output << ds;
         DataSet<int> temp = ds;
-        output << intSort.insertionSort(temp.getData()).count() << ",";
+        if(runInsert == "-i")
+            output << intSort.insertionSort(temp.getData()).count() << ",";
+        else
+            output << "N/A,";
         output << intSort.quickSort_caller(ds.getData()).count() << ",";
         output << intSort.mergeSortCall(ds.getData()).count() << ",";
         output << intSort.shellSort_caller(ds.getData()).count() << ",";
@@ -97,7 +100,10 @@ void FileManager::createOutput() {
     for (DataSet<string>& ds : sData) {
         output << ds;
         DataSet<string> temp = ds;
-        output << stringSort.insertionSort(temp.getData()).count() << ",";
+        if(runInsert == "-i")
+            output << stringSort.insertionSort(temp.getData()).count() << ",";
+        else
+            output << "N/A,";
         output << stringSort.quickSort_caller(ds.getData()).count() << ",";
         output << stringSort.mergeSortCall(ds.getData()).count() << ",";
         output << stringSort.shellSort_caller(ds.getData()).count() << ",";

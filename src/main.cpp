@@ -10,10 +10,13 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-    if (argc == 2) {
+    if (argc == 2 || argc == 3) {
         cout << "Segmentation fault" << endl;
         FileManager fm;
-        fm.getFiles(argv[1]);
+        if(argc == 2)
+            fm.getFiles(argv[1],"");
+        else
+            fm.getFiles(argv[1],argv[2]);
     } else {
         cout << "Wrong number of command line arguments" << endl;
     }
