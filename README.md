@@ -1,4 +1,4 @@
-# Spring 2022 CS 3353 PA01 - Sorting Algorithms
+# Spring 2022 CS 3353 PA02 - Sorting Algorithms
 ## The Fontenauts - Wes Anderson and Ryan Schaefer
 
 ## The Problem
@@ -23,8 +23,20 @@ Enter ```cmake -–build .``` into the command line to build the program. This w
 
 Step 5: Run the Program
 
-Enter ```./PA02 input/``` to run the program. Replace *example.txt* with the name of the input file that you wish to use. We have found that at datasets larger than 25 bruteforce takes a lot of memory and time. If you would like to opt out of running brute force on larger datasets please include ```./PA02 input/ -i``` as a 3rd command line argument.
+Enter ```./PA02 input/``` to run the program. During our testing insertion sort took 5-10 hours to sort the 1 million datasets. If you would like to skip running insertion sort please enter ```./PA02 input/ -i``` to run the program.
 
-Note: We have created several input files to choose from which can be found in the root *input* folder. If you would like to run your own dataset or run more of ours then you will need to move them into the *build/input* folder.
+## Analysis
 
-## The Algorithms
+### Generating Data
+
+### Randomized vs Presorted vs Semisorted
+
+### String vs Ints
+
+### Large Datasets
+
+### Upper Bounds
+
+### Duplicates
+
+### Best Algorithm
