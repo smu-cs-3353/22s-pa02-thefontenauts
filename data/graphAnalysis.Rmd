@@ -14,361 +14,225 @@ data$nlogn = log(data$size) * data$size
 data
 ```
 
+
 ## Insertion Sort
 ```{r}
 insertionTimes = aggregate(insertion_time ~ var_type + size + n2 + format, data = data, FUN = mean)
-ggplot(insertionTimes, aes(x = size, y = insertion_time, color = var_type)) + 
+insertionTimes2 = aggregate(insertion_time ~ var_type + size + n2, data = data, FUN = mean)
+ggplot(insertionTimes2, aes(x = size, y = insertion_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Insertion Sort Time By Data Set Size and Data Type", x = "n", y = "Insertion Sort Time") + 
+  labs(title = "Mean Insertion Sort Time By Data Set Size and Data Type", x = "n", y = "Insertion Sort Time") + 
   guides(color = guide_legend(title = "Data Type"))
 ```
 
-#### Regression Model - Integers
+```{r}
+ggplot(insertionTimes, aes(x = size, y = insertion_time, color = var_type)) +
+  labs(title = "Insertion Sort Regression Models By Data Type", x = "n^2", y = "Insertion Sort Time") +
+  geom_smooth(method="lm") +
+  geom_point() +
+  stat_regline_equation(label.x=0, label.y=c(9000, 6000)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(8000, 5000)) +
+  guides(color = guide_legend(title = "Data Type"))
+```
+
 ```{r}
 insertionInts = subset(insertionTimes, var_type == "int")
-insertionModel = lm(insertion_time ~ n2, data = insertionInts)
-summary(insertionModel)
-```
-
-```{r}
-ggplot(data=insertionInts, aes(x=n2, y=insertion_time)) +
-  labs(title = "Insertion Sort With Integer Data Regression Model", x = "n^2", y = "Insertion Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=2500) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=2300)
-```
-
-#### Regression Model - Strings
-```{r}
-insertionStrings = subset(insertionTimes, var_type == "string")
-insertionModel = lm(insertion_time ~ n2, data = insertionStrings)
-summary(insertionModel)
-```
-
-```{r}
-ggplot(data=insertionStrings, aes(x=n2, y=insertion_time)) +
-  labs(title = "Insertion Sort With String Data Regression Model", x = "n^2", y = "Insertion Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=7500) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=6500)
-```
-
-#### Subset By File Format
-```{r}
-insertionIntsNoDups = subset(insertionInts, format == "noDuplicates")
-insertionIntsSorted = subset(insertionInts, format == "sorted")
-insertionInts60Sorted = subset(insertionInts, format == "60sorted")
-insertionInts20Dups = subset(insertionInts, format == "20duplicates")
-insertionInts40Dups = subset(insertionInts, format == "40duplicates")
-```
-
-```{r}
-insertionStringsNoDups = subset(insertionStrings, format == "noDuplicates")
-insertionStringsSorted = subset(insertionStrings, format == "sorted")
-insertionStrings60Sorted = subset(insertionStrings, format == "60sorted")
-insertionStrings20Dups = subset(insertionStrings, format == "20duplicates")
-insertionStrings40Dups = subset(insertionStrings, format == "40duplicates")
-```
-
-#### File Format Comparisons With Integers
-```{r}
 ggplot(insertionInts, aes(x = size, y = insertion_time, color = format)) + 
   geom_line() + 
   labs(title = "Insertion Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
-#### File Format Comparisons With Strings
 ```{r}
+insertionStrings = subset(insertionTimes, var_type == "string")
 ggplot(insertionStrings, aes(x = size, y = insertion_time, color = format)) + 
   geom_line() + 
   labs(title = "Insertion Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
+
 ## Quick Sort
 ```{r}
 quickTimes = aggregate(quick_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
-ggplot(quickTimes, aes(x = size, y = quick_time, color = var_type)) + 
+quickTimes2 = aggregate(quick_time ~ var_type + size + nlogn, data = data, FUN = mean)
+ggplot(quickTimes2, aes(x = size, y = quick_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Quick Sort Time By Data Set Size and Data Type", x = "n", y = "Quick Sort Time") + 
+  labs(title = "Mean Quick Sort Time By Data Set Size and Data Type", x = "n", y = "Quick Sort Time") + 
   guides(color = guide_legend(title = "Data Type"))
 ```
 
-#### Regression Model - Integers
+```{r}
+ggplot(quickTimes, aes(x = nlogn, y = quick_time, color = var_type)) +
+  labs(title = "Quick Sort Regression Models By Data Type", x = "nlogn", y = "Insertion Sort Time") +
+  geom_smooth(method="lm") +
+  geom_point() +
+  stat_regline_equation(label.x=0, label.y=c(1.5, 1)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(1.3, 0.8)) +
+  guides(color = guide_legend(title = "Data Type"))
+```
+
 ```{r}
 quickInts = subset(quickTimes, var_type == "int")
-quickModel = lm(quick_time ~ nlogn, data = quickInts)
-summary(quickModel)
-```
-
-```{r}
-ggplot(data=quickInts, aes(x=nlogn, y=quick_time)) +
-  labs(title = "Quick Sort With Integer Data Regression Model", x = "nlogn", y = "Quick Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=0.4) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=0.37)
-```
-
-#### Regression Model - Strings
-```{r}
-quickStrings = subset(quickTimes, var_type == "string")
-quickModel = lm(quick_time ~ nlogn, data = quickStrings)
-summary(quickModel)
-```
-
-```{r}
-ggplot(data=quickStrings, aes(x=nlogn, y=quick_time)) +
-  labs(title = "Quick Sort With String Data Regression Model", x = "nlogn", y = "Quick Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=1.5) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=1.4)
-```
-
-#### File Format Comparisons With Integers
-```{r}
 ggplot(quickInts, aes(x = size, y = quick_time, color = format)) + 
   geom_line() + 
   labs(title = "Quick Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
-#### File Format Comparisons With Strings
 ```{r}
+quickStrings = subset(quickTimes, var_type == "string")
 ggplot(quickStrings, aes(x = size, y = quick_time, color = format)) + 
   geom_line() + 
   labs(title = "Quick Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
+
 ## Merge Sort
 ```{r}
 mergeTimes = aggregate(merge_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
-ggplot(mergeTimes, aes(x = size, y = merge_time, color = var_type)) + 
+mergeTimes2 = aggregate(merge_time ~ var_type + size + nlogn, data = data, FUN = mean)
+ggplot(mergeTimes2, aes(x = size, y = merge_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Merge Sort Time By Data Set Size and Data Type", x = "n", y = "Merge Sort Time") + 
+  labs(title = "Mean Merge Sort Time By Data Set Size and Data Type", x = "n", y = "Merge Sort Time") + 
   guides(color = guide_legend(title = "Data Type"))
 ```
 
-#### Regression Model - Integers
+```{r}
+ggplot(mergeTimes, aes(x = nlogn, y = merge_time, color = var_type)) +
+  labs(title = "Merge Sort Regression Models By Data Type", x = "nlogn", y = "Merge Sort Time") +
+  geom_smooth(method="lm") +
+  geom_point() +
+  stat_regline_equation(label.x=0, label.y=c(6, 4)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(5.5, 3.5)) +
+  guides(color = guide_legend(title = "Data Type"))
+```
+
 ```{r}
 mergeInts = subset(mergeTimes, var_type == "int")
-mergeModel = lm(merge_time ~ nlogn, data = mergeInts)
-summary(mergeModel)
-```
-
-```{r}
-ggplot(data=mergeInts, aes(x=nlogn, y=merge_time)) +
-  labs(title = "Merge Sort With Integer Data Regression Model", x = "nlogn", y = "Merge Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=6) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=5.5)
-```
-
-#### Regression Model - Strings
-```{r}
-mergeStrings = subset(mergeTimes, var_type == "string")
-mergeModel = lm(merge_time ~ nlogn, data = mergeStrings)
-summary(mergeModel)
-```
-
-```{r}
-ggplot(data=mergeStrings, aes(x=nlogn, y=merge_time)) +
-  labs(title = "Merge Sort With String Data Regression Model", x = "nlogn", y = "Merge Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=6) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=5.5)
-```
-
-#### File Format Comparisons With Integers
-```{r}
 ggplot(mergeInts, aes(x = size, y = merge_time, color = format)) + 
   geom_line() + 
   labs(title = "Merge Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
-#### File Format Comparisons With Strings
 ```{r}
+mergeStrings = subset(mergeTimes, var_type == "string")
 ggplot(mergeStrings, aes(x = size, y = merge_time, color = format)) + 
   geom_line() + 
   labs(title = "Merge Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
+
 ## Shell Sort
 ```{r}
 shellTimes = aggregate(shell_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
-ggplot(shellTimes, aes(x = size, y = shell_time, color = var_type)) + 
+shellTimes2 = aggregate(shell_time ~ var_type + size + nlogn, data = data, FUN = mean)
+ggplot(shellTimes2, aes(x = size, y = shell_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Shell Sort Time By Data Set Size and Data Type", x = "n", y = "Shell Sort Time") + 
+  labs(title = "Mean Shell Sort Time By Data Set Size and Data Type", x = "n", y = "Shell Sort Time") + 
   guides(color = guide_legend(title = "Data Type"))
 ```
 
-#### Regression Model - Integers
+```{r}
+ggplot(shellTimes, aes(x = nlogn, y = shell_time, color = var_type)) +
+  labs(title = "Shell Sort Regression Models By Data Type", x = "nlogn", y = "Shell Sort Time") +
+  geom_smooth(method="lm") +
+  geom_point() +
+  stat_regline_equation(label.x=0, label.y=c(4, 3)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(3.75, 2.75)) +
+  guides(color = guide_legend(title = "Data Type"))
+```
+
 ```{r}
 shellInts = subset(shellTimes, var_type == "int")
-shellModel = lm(shell_time ~ nlogn, data = shellInts)
-summary(shellModel)
-```
-
-```{r}
-ggplot(data=shellInts, aes(x=nlogn, y=shell_time)) +
-  labs(title = "Shell Sort With Integer Data Regression Model", x = "nlogn", y = "Shell Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=0.7) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=0.65)
-```
-
-#### Regression Model - Strings
-```{r}
-shellStrings = subset(shellTimes, var_type == "string")
-shellModel = lm(shell_time ~ nlogn, data = shellStrings)
-summary(shellModel)
-```
-
-```{r}
-ggplot(data=shellStrings, aes(x=nlogn, y=shell_time)) +
-  labs(title = "Shell Sort With String Data Regression Model", x = "nlogn", y = "Shell Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=4) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=3.7)
-```
-
-#### File Format Comparisons With Integers
-```{r}
 ggplot(shellInts, aes(x = size, y = shell_time, color = format)) + 
   geom_line() + 
   labs(title = "Shell Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
-#### File Format Comparisons With Strings
 ```{r}
+shellStrings = subset(shellTimes, var_type == "string")
 ggplot(shellStrings, aes(x = size, y = shell_time, color = format)) + 
   geom_line() + 
   labs(title = "Shell Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
+
 ## Intro Sort
 ```{r}
 introTimes = aggregate(intro_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
-ggplot(introTimes, aes(x = size, y = intro_time, color = var_type)) + 
+introTimes2 = aggregate(intro_time ~ var_type + size + nlogn, data = data, FUN = mean)
+ggplot(introTimes2, aes(x = size, y = intro_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Intro Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Intro Sort Time") + 
+  labs(title = "Mean Intro Sort Time By Data Set Size and Data Type", x = "n", y = "Intro Sort Time") + 
   guides(color = guide_legend(title = "Data Type"))
 ```
 
-#### Regression Model - Integers
+```{r}
+ggplot(introTimes, aes(x = nlogn, y = intro_time, color = var_type)) +
+  labs(title = "Intro Sort Regression Models By Data Type", x = "nlogn", y = "Intro Sort Time") +
+  geom_smooth(method="lm") +
+  geom_point() +
+  stat_regline_equation(label.x=0, label.y=c(4, 3)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(3.75, 2.75)) +
+  guides(color = guide_legend(title = "Data Type"))
+```
+
 ```{r}
 introInts = subset(introTimes, var_type == "int")
-introModel = lm(intro_time ~ nlogn, data = introInts)
-summary(introModel)
-```
-
-```{r}
-ggplot(data=introInts, aes(x=nlogn, y=intro_time)) +
-  labs(title = "Intro Sort With Integer Data Regression Model", x = "nlogn", y = "Intro Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=2.25) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=2.1)
-```
-
-#### Regression Model - Strings
-```{r}
-introStrings = subset(introTimes, var_type == "string")
-introModel = lm(intro_time ~ nlogn, data = introStrings)
-summary(introModel)
-```
-
-```{r}
-ggplot(data=introStrings, aes(x=nlogn, y=intro_time)) +
-  labs(title = "Intro Sort With String Data Regression Model", x = "nlogn", y = "Intro Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=4) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=3.7)
-```
-
-#### File Format Comparisons With Integers
-```{r}
 ggplot(introInts, aes(x = size, y = intro_time, color = format)) + 
   geom_line() + 
   labs(title = "Intro Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
-#### File Format Comparisons With Strings
 ```{r}
+introStrings = subset(introTimes, var_type == "string")
 ggplot(introStrings, aes(x = size, y = intro_time, color = format)) + 
   geom_line() + 
   labs(title = "Intro Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
+
 ## Tim Sort
 ```{r}
 timTimes = aggregate(tim_time ~ var_type + size + nlogn + format, data = data, FUN = mean)
-ggplot(timTimes, aes(x = size, y = tim_time, color = var_type)) + 
+timTimes2 = aggregate(tim_time ~ var_type + size + nlogn, data = data, FUN = mean)
+ggplot(timTimes2, aes(x = size, y = tim_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Tim Sort Time By Data Set Size and Data Type", x = "Data Set Size", y = "Tim Sort Time") + 
+  labs(title = "Mean Tim Sort Time By Data Set Size and Data Type", x = "n", y = "Tim Sort Time") + 
   guides(color = guide_legend(title = "Data Type"))
 ```
 
-#### Regression Model - Integers
+```{r}
+ggplot(timTimes, aes(x = nlogn, y = tim_time, color = var_type)) +
+  labs(title = "Tim Sort Regression Models By Data Type", x = "nlogn", y = "Tim Sort Time") +
+  geom_smooth(method="lm") +
+  geom_point() +
+  stat_regline_equation(label.x=0, label.y=c(4, 3)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(3.75, 2.75)) +
+  guides(color = guide_legend(title = "Data Type"))
+```
+
 ```{r}
 timInts = subset(timTimes, var_type == "int")
-timModel = lm(tim_time ~ nlogn, data = timInts)
-summary(timModel)
-```
-
-```{r}
-ggplot(data=timInts, aes(x=nlogn, y=tim_time)) +
-  labs(title = "Tim Sort With Integer Data Regression Model", x = "nlogn", y = "Tim Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=2.25) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=2.1)
-```
-
-#### Regression Model - Strings
-```{r}
-timStrings = subset(timTimes, var_type == "string")
-timModel = lm(tim_time ~ nlogn, data = timStrings)
-summary(timModel)
-```
-
-```{r}
-ggplot(data=timStrings, aes(x=nlogn, y=tim_time)) +
-  labs(title = "Tim Sort With String Data Regression Model", x = "nlogn", y = "Tim Sort Time") +
-  geom_smooth(method="lm") +
-  geom_point() +
-  stat_regline_equation(label.x=0, label.y=4) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=3.7)
-```
-
-#### File Format Comparisons With Integers
-```{r}
 ggplot(timInts, aes(x = size, y = tim_time, color = format)) + 
   geom_line() + 
   labs(title = "Tim Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
 
-#### File Format Comparisons With Strings
 ```{r}
+timStrings = subset(timTimes, var_type == "string")
 ggplot(timStrings, aes(x = size, y = tim_time, color = format)) + 
   geom_line() + 
   labs(title = "Tim Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time") + 
   guides(color = guide_legend(title = "File Format"))
 ```
+
