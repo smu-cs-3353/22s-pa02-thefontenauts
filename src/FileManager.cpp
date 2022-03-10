@@ -5,7 +5,7 @@
 #include "Algorithms.h"
 using namespace std;
 
-void FileManager::getFiles(char* folder, char* runInsert) {
+void FileManager::getFiles(char* folder, bool runInsert) {
     char* p = new char[256];
     getcwd(p, 256);
     string path = p;
@@ -30,7 +30,7 @@ void FileManager::getFiles(char* folder, char* runInsert) {
     }
 }
 
-void FileManager::readFiles(char* runInsert) {
+void FileManager::readFiles(bool runInsert) {
     ifstream input;
     for (string& file : files) {
         string type;
@@ -78,7 +78,7 @@ void FileManager::readFiles(char* runInsert) {
     createOutput(runInsert);
 }
 
-void FileManager::createOutput(char* runInsert) {
+void FileManager::createOutput(bool runInsert) {
     ofstream output;
     output.open("sorting.csv");
     output << "var_type,size,format,insertion_time,quick_time,merge_time,shell_time,intro_time,tim_time" << endl;
@@ -86,7 +86,7 @@ void FileManager::createOutput(char* runInsert) {
     for (DataSet<int>& ds : iData) {
         output << ds;
         DataSet<int> temp = ds;
-        if(runInsert == "-i")
+        if(runInsert)
             output << intSort.insertionSort(temp.getData()).count() << ",";
         else
             output << "N/A,";
@@ -100,7 +100,7 @@ void FileManager::createOutput(char* runInsert) {
     for (DataSet<string>& ds : sData) {
         output << ds;
         DataSet<string> temp = ds;
-        if(runInsert == "-i")
+        if(runInsert)
             output << stringSort.insertionSort(temp.getData()).count() << ",";
         else
             output << "N/A,";

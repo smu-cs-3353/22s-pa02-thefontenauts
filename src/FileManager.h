@@ -14,9 +14,9 @@ private:
 public:
     FileManager() = default;
 
-    void getFiles(char*, char*);
-    void readFiles(char*);
-    void createOutput(char*);
+    void getFiles(char*, bool);
+    void readFiles(bool);
+    void createOutput(bool);
 };
 
 
