@@ -29,14 +29,30 @@ Enter ```./PA02 input/``` to run the program. During our testing insertion sort 
 
 ### Generating Data
 
+For data generation we used javascript. Add more stuff here.
+
 ### Randomized vs Presorted vs Semisorted
+
+For all sorting algorithms the presorted data was the best case scenario. However the magnitude difference was only noticable for insertion and shell sort. For semisorted data the difference in magnitude was also only noticeable for insertion and shell sort. The difference was less noticeable for shell sort than with the fully sorted dataset.
 
 ### String vs Ints
 
+As seen in the graphs below for all sorting algorithms the time to sort a string dataset was significantly longer than the time to sort the corresponding integer dataset.
+
+Insert graphs here
+
 ### Large Datasets
+
+For large datasets quick sort and shell sort function very well at under 1 second for 1 million ints and under 10 seconds for strings. Merge, intro, and tim sort were all in the same range functioning slightly worse than quick and shell sorts. Insertion sort was by far the worst, taking over 5 hours on one testing machine and over 10 on another testing machine when sorting 1 million strings.
 
 ### Upper Bounds
 
+Put R regressions here
+
 ### Duplicates
 
+All of the sorts handle duplicates rather well. While there is a little variance in the timings it is most likely due to the data being ordered in a way that is slightly better or worse for the algorithm. The magnitudes for the 20 and 40 percent duplicate datasets are on the same scale as the datasets with no duplicates.
+
 ### Best Algorithm
+
+From the data we collected the best sorting algorithm is quick sort. It consistently operates faster than the other algorithms 
