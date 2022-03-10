@@ -6,12 +6,16 @@ output: pdf_document
 
 ## Create Dataset
 ```{r}
+# Load Dependencies
 library(ggplot2)
 library(ggpubr)
-data = read.csv("CombinedMean.csv")
+library(svglite)
+
+# Load Dataset
+data = read.csv("FinalData.csv")
+# Create n^2 and nlogn columns
 data$n2 = data$size ^ 2
 data$nlogn = log(data$size) * data$size
-data
 ```
 
 
@@ -21,34 +25,38 @@ insertionTimes = aggregate(insertion_time ~ var_type + size + n2 + format, data 
 insertionTimes2 = aggregate(insertion_time ~ var_type + size + n2, data = data, FUN = mean)
 ggplot(insertionTimes2, aes(x = size, y = insertion_time, color = var_type)) +
   geom_line() +
-  labs(title = "Mean Insertion Sort Time By Data Set Size and Data Type", x = "n", y = "Insertion Sort Time") +
+  labs(title = "Mean Insertion Sort Time By Data Set Size and Data Type", x = "n", y = "Insertion Sort Time (s)") +
   guides(color = guide_legend(title = "Data Type"))
-```
+ggsave("insertionMean.svg")
+``` 
 
 ```{r}
 ggplot(insertionTimes, aes(x = size, y = insertion_time, color = var_type)) +
-  labs(title = "Insertion Sort Regression Models By Data Type", x = "n^2", y = "Insertion Sort Time") +
+  labs(title = "Insertion Sort Regression Models By Data Type", x = "n^2", y = "Insertion Sort Time (s)") +
   geom_smooth(method="lm") +
   geom_point() +
-  stat_regline_equation(label.x=0, label.y=c(9000, 6000)) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(8000, 5000)) +
+  stat_regline_equation(label.x=0, label.y=c(22500, 17000)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(20500, 15000)) +
   guides(color = guide_legend(title = "Data Type"))
+ggsave("insertionRegression.svg")
 ```
 
 ```{r}
 insertionInts = subset(insertionTimes, var_type == "int")
 ggplot(insertionInts, aes(x = size, y = insertion_time, color = format)) +
   geom_line() +
-  labs(title = "Insertion Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") +
+  labs(title = "Insertion Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time (s)") +
   guides(color = guide_legend(title = "File Format"))
+ggsave("insertionInts.svg")
 ```
 
 ```{r}
 insertionStrings = subset(insertionTimes, var_type == "string")
 ggplot(insertionStrings, aes(x = size, y = insertion_time, color = format)) +
   geom_line() +
-  labs(title = "Insertion Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time") +
+  labs(title = "Insertion Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time (s)") +
   guides(color = guide_legend(title = "File Format"))
+ggsave("insertionStrings.svg")
 ```
 
 
@@ -58,34 +66,38 @@ quickTimes = aggregate(quick_time ~ var_type + size + nlogn + format, data = dat
 quickTimes2 = aggregate(quick_time ~ var_type + size + nlogn, data = data, FUN = mean)
 ggplot(quickTimes2, aes(x = size, y = quick_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Mean Quick Sort Time By Data Set Size and Data Type", x = "n", y = "Quick Sort Time") + 
+  labs(title = "Mean Quick Sort Time By Data Set Size and Data Type", x = "n", y = "Quick Sort Time (s)") + 
   guides(color = guide_legend(title = "Data Type"))
+ggsave("quickMean.svg")
 ```
 
 ```{r}
 ggplot(quickTimes, aes(x = nlogn, y = quick_time, color = var_type)) +
-  labs(title = "Quick Sort Regression Models By Data Type", x = "nlogn", y = "Insertion Sort Time") +
+  labs(title = "Quick Sort Regression Models By Data Type", x = "nlogn", y = "Insertion Sort Time (s)") +
   geom_smooth(method="lm") +
   geom_point() +
-  stat_regline_equation(label.x=0, label.y=c(1.5, 1)) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(1.3, 0.8)) +
+  stat_regline_equation(label.x=0, label.y=c(2.5, 2)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(2.3, 1.8)) +
   guides(color = guide_legend(title = "Data Type"))
+ggsave("quickRegression.svg")
 ```
 
 ```{r}
 quickInts = subset(quickTimes, var_type == "int")
 ggplot(quickInts, aes(x = size, y = quick_time, color = format)) + 
   geom_line() + 
-  labs(title = "Quick Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time") + 
+  labs(title = "Quick Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("quickInts.svg")
 ```
 
 ```{r}
 quickStrings = subset(quickTimes, var_type == "string")
 ggplot(quickStrings, aes(x = size, y = quick_time, color = format)) + 
   geom_line() + 
-  labs(title = "Quick Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time") + 
+  labs(title = "Quick Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("quickStrings.svg")
 ```
 
 
@@ -95,34 +107,38 @@ mergeTimes = aggregate(merge_time ~ var_type + size + nlogn + format, data = dat
 mergeTimes2 = aggregate(merge_time ~ var_type + size + nlogn, data = data, FUN = mean)
 ggplot(mergeTimes2, aes(x = size, y = merge_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Mean Merge Sort Time By Data Set Size and Data Type", x = "n", y = "Merge Sort Time") + 
+  labs(title = "Mean Merge Sort Time By Data Set Size and Data Type", x = "n", y = "Merge Sort Time (s)") + 
   guides(color = guide_legend(title = "Data Type"))
+ggsave("mergeMean.svg")
 ```
 
 ```{r}
 ggplot(mergeTimes, aes(x = nlogn, y = merge_time, color = var_type)) +
-  labs(title = "Merge Sort Regression Models By Data Type", x = "nlogn", y = "Merge Sort Time") +
+  labs(title = "Merge Sort Regression Models By Data Type", x = "nlogn", y = "Merge Sort Time (s)") +
   geom_smooth(method="lm") +
   geom_point() +
-  stat_regline_equation(label.x=0, label.y=c(6, 4)) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(5.5, 3.5)) +
+  stat_regline_equation(label.x=0, label.y=c(8, 6)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(7.2, 5.2)) +
   guides(color = guide_legend(title = "Data Type"))
+ggsave("mergeRegression.svg")
 ```
 
 ```{r}
 mergeInts = subset(mergeTimes, var_type == "int")
 ggplot(mergeInts, aes(x = size, y = merge_time, color = format)) + 
   geom_line() + 
-  labs(title = "Merge Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time") + 
+  labs(title = "Merge Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("mergeInts.svg")
 ```
 
 ```{r}
 mergeStrings = subset(mergeTimes, var_type == "string")
 ggplot(mergeStrings, aes(x = size, y = merge_time, color = format)) + 
   geom_line() + 
-  labs(title = "Merge Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time") + 
+  labs(title = "Merge Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("mergeStrings.svg")
 ```
 
 
@@ -132,34 +148,38 @@ shellTimes = aggregate(shell_time ~ var_type + size + nlogn + format, data = dat
 shellTimes2 = aggregate(shell_time ~ var_type + size + nlogn, data = data, FUN = mean)
 ggplot(shellTimes2, aes(x = size, y = shell_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Mean Shell Sort Time By Data Set Size and Data Type", x = "n", y = "Shell Sort Time") + 
+  labs(title = "Mean Shell Sort Time By Data Set Size and Data Type", x = "n", y = "Shell Sort Time (s)") + 
   guides(color = guide_legend(title = "Data Type"))
+ggsave("shellMean.svg")
 ```
 
 ```{r}
 ggplot(shellTimes, aes(x = nlogn, y = shell_time, color = var_type)) +
-  labs(title = "Shell Sort Regression Models By Data Type", x = "nlogn", y = "Shell Sort Time") +
+  labs(title = "Shell Sort Regression Models By Data Type", x = "nlogn", y = "Shell Sort Time (s)") +
   geom_smooth(method="lm") +
   geom_point() +
-  stat_regline_equation(label.x=0, label.y=c(4, 3)) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(3.75, 2.75)) +
+  stat_regline_equation(label.x=0, label.y=c(6, 4.5)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(5.5, 4)) +
   guides(color = guide_legend(title = "Data Type"))
+ggsave("shellRegression.svg")
 ```
 
 ```{r}
 shellInts = subset(shellTimes, var_type == "int")
 ggplot(shellInts, aes(x = size, y = shell_time, color = format)) + 
   geom_line() + 
-  labs(title = "Shell Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time") + 
+  labs(title = "Shell Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("shellInts.svg")
 ```
 
 ```{r}
 shellStrings = subset(shellTimes, var_type == "string")
 ggplot(shellStrings, aes(x = size, y = shell_time, color = format)) + 
   geom_line() + 
-  labs(title = "Shell Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time") + 
+  labs(title = "Shell Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("shellStrings.svg")
 ```
 
 
@@ -169,34 +189,38 @@ introTimes = aggregate(intro_time ~ var_type + size + nlogn + format, data = dat
 introTimes2 = aggregate(intro_time ~ var_type + size + nlogn, data = data, FUN = mean)
 ggplot(introTimes2, aes(x = size, y = intro_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Mean Intro Sort Time By Data Set Size and Data Type", x = "n", y = "Intro Sort Time") + 
+  labs(title = "Mean Intro Sort Time By Data Set Size and Data Type", x = "n", y = "Intro Sort Time (s)") + 
   guides(color = guide_legend(title = "Data Type"))
+ggsave("introMean.svg")
 ```
 
 ```{r}
 ggplot(introTimes, aes(x = nlogn, y = intro_time, color = var_type)) +
-  labs(title = "Intro Sort Regression Models By Data Type", x = "nlogn", y = "Intro Sort Time") +
+  labs(title = "Intro Sort Regression Models By Data Type", x = "nlogn", y = "Intro Sort Time (s)") +
   geom_smooth(method="lm") +
   geom_point() +
-  stat_regline_equation(label.x=0, label.y=c(4, 3)) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(3.75, 2.75)) +
+  stat_regline_equation(label.x=0, label.y=c(6, 4.5)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(5.5, 4)) +
   guides(color = guide_legend(title = "Data Type"))
+ggsave("introRegression.svg")
 ```
 
 ```{r}
 introInts = subset(introTimes, var_type == "int")
 ggplot(introInts, aes(x = size, y = intro_time, color = format)) + 
   geom_line() + 
-  labs(title = "Intro Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time") + 
+  labs(title = "Intro Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("introInts.svg")
 ```
 
 ```{r}
 introStrings = subset(introTimes, var_type == "string")
 ggplot(introStrings, aes(x = size, y = intro_time, color = format)) + 
   geom_line() + 
-  labs(title = "Intro Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time") + 
+  labs(title = "Intro Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("introStrings.svg")
 ```
 
 
@@ -206,45 +230,55 @@ timTimes = aggregate(tim_time ~ var_type + size + nlogn + format, data = data, F
 timTimes2 = aggregate(tim_time ~ var_type + size + nlogn, data = data, FUN = mean)
 ggplot(timTimes2, aes(x = size, y = tim_time, color = var_type)) + 
   geom_line() + 
-  labs(title = "Mean Tim Sort Time By Data Set Size and Data Type", x = "n", y = "Tim Sort Time") + 
+  labs(title = "Mean Tim Sort Time By Data Set Size and Data Type", x = "n", y = "Tim Sort Time (s)") + 
   guides(color = guide_legend(title = "Data Type"))
+ggsave("timMean.svg")
 ```
 
 ```{r}
 ggplot(timTimes, aes(x = nlogn, y = tim_time, color = var_type)) +
-  labs(title = "Tim Sort Regression Models By Data Type", x = "nlogn", y = "Tim Sort Time") +
+  labs(title = "Tim Sort Regression Models By Data Type", x = "nlogn", y = "Tim Sort Time (s)") +
   geom_smooth(method="lm") +
   geom_point() +
-  stat_regline_equation(label.x=0, label.y=c(4, 3)) +
-  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(3.75, 2.75)) +
+  stat_regline_equation(label.x=0, label.y=c(6, 4.5)) +
+  stat_cor(aes(label=..rr.label..), label.x=0, label.y=c(5.5, 4)) +
   guides(color = guide_legend(title = "Data Type"))
+ggsave("timRegression.svg")
 ```
 
 ```{r}
 timInts = subset(timTimes, var_type == "int")
 ggplot(timInts, aes(x = size, y = tim_time, color = format)) + 
   geom_line() + 
-  labs(title = "Tim Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time") + 
+  labs(title = "Tim Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("timInts.svg")
 ```
 
 ```{r}
 timStrings = subset(timTimes, var_type == "string")
 ggplot(timStrings, aes(x = size, y = tim_time, color = format)) + 
   geom_line() + 
-  labs(title = "Tim Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time") + 
+  labs(title = "Tim Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time (s)") + 
   guides(color = guide_legend(title = "File Format"))
+ggsave("timStrings.svg")
 ```
 
 ## Algorithm Comparison
 ```{r}
+# Create new data frame that is restructured to have 1 time column
 data2 = matrix(ncol = 5, nrow = 360)
+# For each algorithm:
 for (i in 1:6) {
+  # For each input file:
   for (j in 1:60) {
+    # Set the first 3 cols to the corresponding cols from old dataset
     data2[i * j, 1] = data[j, 1]
     data2[i * j, 2] = data[j, 2]
     data2[i * j, 3] = data[j, 3]
+    # Set the time from the correct algorithm
     data2[i * j, 4] = data[j, 3 + i]
+    # Set which algorithm this row is from
     if (i == 1) {
       data2[i * j, 5] = "insertion"
     } else if (i == 2) {
@@ -261,7 +295,9 @@ for (i in 1:6) {
   }
 }
 data2 = data.frame(data2)
+# Set the column names
 colnames(data2) = c("var_type", "size", "format", "time", "algorithm")
+# Convert numeric columns back into numeric data
 data2 = transform(data2, time = as.numeric(time))
 data2 = transform(data2, size = as.numeric(size))
 ```
@@ -271,16 +307,18 @@ integerData = subset(data2, var_type == "int")
 integerTimes = aggregate(time ~ algorithm + size, data = integerData, FUN = mean)
 ggplot(integerTimes, aes(x = size, y = time, color = algorithm)) + 
   geom_line() + 
-  labs(title = "Mean Sort Time For Integer Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  labs(title = "Mean Sort Time For Integer Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time (s)") + 
   guides(color = guide_legend(title = "Algorithm"))
+ggsave("intMean.svg")
 ```
 
 ```{r}
 integerTimes2 = subset(integerTimes, algorithm != "insertion")
 ggplot(integerTimes2, aes(x = size, y = time, color = algorithm)) + 
   geom_line() + 
-  labs(title = "Mean Sort Time For Integer Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  labs(title = "Mean Sort Time For Integer Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time (s)") + 
   guides(color = guide_legend(title = "Algorithm"))
+ggsave("intMean2.svg")
 ```
 
 ```{r}
@@ -288,14 +326,16 @@ stringData = subset(data2, var_type == "string")
 stringTimes = aggregate(time ~ algorithm + size, data = stringData, FUN = mean)
 ggplot(stringTimes, aes(x = size, y = time, color = algorithm)) + 
   geom_line() + 
-  labs(title = "Mean Sort Time For String Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  labs(title = "Mean Sort Time For String Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time (s)") + 
   guides(color = guide_legend(title = "Algorithm"))
+ggsave("stringMean.svg")
 ```
 
 ```{r}
 stringTimes2 = subset(stringTimes, algorithm != "insertion")
 ggplot(stringTimes2, aes(x = size, y = time, color = algorithm)) + 
   geom_line() + 
-  labs(title = "Mean Sort Time For String Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time") + 
+  labs(title = "Mean Sort Time For String Data By Data Set Size and Algorithm", x = "n", y = "Sorting Time (s)") + 
   guides(color = guide_legend(title = "Algorithm"))
+ggsave("stringMean2.svg")
 ```
