@@ -8,7 +8,7 @@ output: pdf_document
 ```{r}
 library(ggplot2)
 library(ggpubr)
-data = read.csv("WesDataRun1.csv")
+data = read.csv("CombinedMean.csv")
 data$n2 = data$size ^ 2
 data$nlogn = log(data$size) * data$size
 data
