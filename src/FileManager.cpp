@@ -1,6 +1,6 @@
 /* Wes Anderson and Ryan Schaefer
  * 22s-CS-3353 PA 2
- * 2/8/22
+ * 3/11/22
  *
  * File manager opens a directory of files and grabs the 60 datasets contained.
  * It then runs those through 5-6 algorithms depending on if the user wants to run insertion sort

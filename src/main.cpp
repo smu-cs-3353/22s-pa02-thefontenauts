@@ -1,6 +1,6 @@
 /* Wes Anderson and Ryan Schaefer
  * 22s-CS-3353 PA 2
- * 2/8/22
+ * 3/11/22
  *
  *
  * In this program we track the timing of 6 algorithms and how they operate in response to different datasets

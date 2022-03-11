@@ -1,6 +1,6 @@
 /* Wes Anderson and Ryan Schaefer
  * 22s-CS-3353 PA 2
- * 2/8/22
+ * 3/11/22
  *
  * Algorithms.h contains our implementations for all 6 algorithms and a checker function to make sure the algorithms operate properly
  */
