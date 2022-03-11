@@ -63,6 +63,8 @@ Put R regressions here.
 
 ### Best Algorithm
 
+<img src="./data/intMean2.svg" />
+
 From the data we collected the best sorting algorithm is quick sort. It consistently operates faster than the other algorithms. 
 
 ```It also had the smallest coefficient for its upper bound.``` 
