@@ -15,25 +15,34 @@ using namespace std;
 
 //opens the directory and grabs all the dataset files
 void FileManager::getFiles(char* folder, bool runInsert) {
+    // Get the path to the current directory
     char* p = new char[256];
     getcwd(p, 256);
     string path = p;
+    // Add the folder containing the input files to the path
     path += "/";
     path += folder;
     delete[] p;
+    // Create a dirent object to find all files in the folder
     DIR* dr;
     dirent* en;
     dr = opendir(path.c_str());
+    // If the folder was successfully opened:
     if (dr) {
+        // While there are still unread files in the folder:
         while ((en = readdir(dr)) != nullptr) {
             string file = en->d_name;
+            // Add the file to the vector of files if it is a .txt file
             if (file.find(".txt") != string::npos) {
                 files.push_back(file);
             }
         }
+        // Close the dirent object
         closedir(dr);
+        // Call the function to read the files found in this function
         readFiles(runInsert);
     } else {
+        // End the program if the folder failed to open
         cout << "Failed to find input file directory" << endl;
         exit(1);
     }
