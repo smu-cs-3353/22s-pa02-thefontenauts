@@ -1,3 +1,10 @@
+/* Wes Anderson and Ryan Schaefer
+ * 22s-CS-3353 PA 2
+ * 2/8/22
+ *
+ * Algorithms.h contains our implementations for all 6 algorithms and a checker function to make sure the algorithms operate properly
+ */
+
 #ifndef PA02_ALGORITHMS_H
 #define PA02_ALGORITHMS_H
 
@@ -12,9 +19,10 @@ class Algorithms {
 public:
     Algorithms() = default;
 
-
+    //Insertion Sort Function
     std::chrono::duration<double> insertionSort(vector<T>&);
-    std::chrono::duration<double> introSort(vector<T>);
+
+    //Tim Sort Function
     std::chrono::duration<double> timSort(vector<T>);
 
     // Merge Sort Functions
@@ -23,6 +31,7 @@ public:
     vector<T> merge(vector<T>&, vector<T>&);
 
     // Intro Sort Functions
+    std::chrono::duration<double> introSort(vector<T>);
     vector<T> introSort(vector<T>, int);
 
     //Quick Sort functions
@@ -60,7 +69,7 @@ std::chrono::duration<double> Algorithms<T>::insertionSort(vector<T>& data) {
     }
 }
 
-
+//merge sort caller to control time points and calls the checker function
 template <typename T>
 std::chrono::duration<double> Algorithms<T>::mergeSortCall(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
@@ -77,11 +86,14 @@ std::chrono::duration<double> Algorithms<T>::mergeSortCall(vector<T> data) {
     }
 }
 
+//shell sort caller to manage timing points and checker function
 template <typename T>
 std::chrono::duration<double> Algorithms<T>::shellSort_caller(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
+
     shellSort(data);
+
     end = std::chrono::high_resolution_clock::now();
     if (isSorted(data)) {
         return end - start;
@@ -94,15 +106,20 @@ std::chrono::duration<double> Algorithms<T>::shellSort_caller(vector<T> data) {
 template <typename T>
 void Algorithms<T>::shellSort(vector<T>& data)
 {
-    //Shell sort operates on the observation that insertion sort works more efficiently with semisorted data
-    //Shell sort does is it presorts some of the data so that when insertion sort is run on the subsets, it will function better
+    //Shell sort operates on using different intervals to swap elements into a more correct order
+    //It reduces the "gap" after every loop and compares on a smaller gap
+    // until it is the same as insertion sort with gap = 1
+
+    //When gap = 1 it will only ever swap two elements right next to each other
+    // since the larger gaps put them in their general location
+
     for (int gap = data.size()/2; gap > 0; gap /= 2)
     {
         for (int i = gap; i < data.size(); i += 1)
         {
             T temp = data[i];
             int j;
-            //insertion sort
+            //insertion sort with gap logic
             for (j = i; j >= gap && data[j - gap] > temp; j -= gap)
                 data[j] = data[j - gap];
             data[j] = temp;
@@ -227,18 +244,7 @@ vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
     }
 }
 
-template <typename T>
-bool Algorithms<T>::isSorted(vector<T>& data) {
-    for (int i = 1; i < data.size(); i++) {
-        if (data.at(i - 1) > data.at(i)) {
-            return false;
-        }
-    }
-    return true;
-}
-
-
-//Quick Sort Stuffs
+//Quick Sort Functions
 template <typename T>
 std::chrono::duration<double> Algorithms<T>::quickSort_caller(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
@@ -255,6 +261,8 @@ std::chrono::duration<double> Algorithms<T>::quickSort_caller(vector<T> data) {
     }
 }
 
+
+//This is randomized quicksort
 template <typename T>
 void Algorithms<T>::quickSort(vector<T>& vec, int low, int high)
 {
@@ -302,8 +310,21 @@ int Algorithms<T>::partition(vector<T>& vec, int low, int high)
             swap(&vec[i], &vec[j]);
         }
     }
+    //put pivot in correct spot
     swap(&vec[i + 1], &vec[high]);
     return (i + 1);
 }
+
+//Checks if the vector is actually sorted. Used to test implementations
+template <typename T>
+bool Algorithms<T>::isSorted(vector<T>& data) {
+    for (int i = 1; i < data.size(); i++) {
+        if (data.at(i - 1) > data.at(i)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 #endif //PA02_ALGORITHMS_H

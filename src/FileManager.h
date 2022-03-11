@@ -1,3 +1,9 @@
+/* Wes Anderson and Ryan Schaefer
+ * 22s-CS-3353 PA 2
+ * 2/8/22
+ *
+ */
+
 #ifndef PA02_FILEMANAGER_H
 #define PA02_FILEMANAGER_H
 
