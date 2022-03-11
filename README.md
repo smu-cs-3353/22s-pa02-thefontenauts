@@ -3,7 +3,7 @@
 
 ## The Problem
 
-In this project we were tasked with implementing six sorting algorithms : insertion, intro, merge, quick, shell, and tim. We then generated both integer and string datasets of differing sizes that fall into five categories -  0% duplicates, 20% duplicates, 40% duplicates, 60% sorted, and 100% sorted. Using the chrono library we ran our generated datasets through the sorting algorithms and tracked the times. In our analysis section we use the data generated and describe under what scenarios different algorithms perform better or worse.
+In this project we were tasked with implementing six sorting algorithms - insertion, intro, merge, quick, shell, and tim. We generated both integer and string datasets of differing sizes that fall into five categories -  0% duplicates, 20% duplicates, 40% duplicates, 60% sorted, and 100% sorted. Using the chrono library we tracked the time each algorithm took to sort each dataset. In our analysis section we use the data generated and describe under what scenarios different algorithms perform better or worse.
 
 ## Building and Running the Program
 
@@ -35,7 +35,7 @@ To generate the random data for this project, we wrote a JavaScript program and 
 
 ### Randomized vs Presorted vs Semisorted
 
-For all sorting algorithms the presorted data was the best case scenario. However the magnitude difference was only noticable for insertion and shell sort. For semisorted data the difference in magnitude was also only noticeable for insertion and shell sort. The difference was less noticeable for shell sort than with the fully sorted dataset.
+For all sorting algorithms the presorted data was the best case scenario. However the magnitude difference was only noticable for insertion and shell sort. For semisorted data the difference in magnitude was also only noticeable for insertion and shell sort. This difference was less noticeable for shell sort than with the fully sorted dataset.
 
 Note - The graphs below show only the integer data collected. The string data shows the same trends on a larger timescale. If you would like to view them please look in the data folder.
 
@@ -83,8 +83,7 @@ Note - Some of the graphs show an R^2 value of 1 because ggplot (the R library w
 
 ### Best Algorithm
 
-From the data we collected the best sorting algorithm is quick sort. The graphs below show all sorting algorithm average times except insertion as it was magnitudes above all others. In both integers and strings, quick sort is shown to have the fastest sorting time proving it is the best of the algorithms we implemented
+From the data we collected the best sorting algorithm is quick sort. The graphs below show all sorting algorithm average times except insertion sort as it was magnitudes above all others. In both integers and strings, quick sort is shown to have the fastest sorting time proving it is the best of the algorithms we implemented
 
 <img src="./data/intMean2.svg" />
 <img src="./data/stringMean2.svg" />
-
