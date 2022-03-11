@@ -29,7 +29,7 @@ Enter ```./PA02 input/``` to run the program. During our testing insertion sort 
 
 ## Data Generation
 
-To generate the random data for this project, we wrote a JavaScript program and used the fs and chance libraries. In this program, we created an array with all of the data set sizes we wanted and had nested for loops, with the outer loop iterating twice (for ints and strings) and the inner loop iterating through each value in the array of sizes. Inside these loops, we called a series of functions, each designed to generate the data for a different file format. To be more efficient, we had these functions call each other. For example, the sorted function calls the no duplicates function and sorts it at the end. This means that the no duplicates function is used to make all of the data sets. For the integer data, it creates an array with all values from 0 to the array size - 1 and then mixes the values. For string data, it uses the chance library to create an array of the given size with random strings. After each data set is created, it is outputted to a .txt file with 1 value on each line using the fs library. All of the output files are named based on which data set is in that file.
+To generate the random data for this project, we wrote a JavaScript program and used the fs and chance libraries. In this program, we created an array with all of the dataset sizes we wanted and had nested for loops, with the outer loop iterating twice (for ints and strings) and the inner loop iterating through each value in the array of sizes. Inside these loops, we called a series of functions, each designed to generate the data for a different file format. To be more efficient, we had these functions call each other. For example, the sorted function calls the no duplicates function and sorts it at the end. This means that the no duplicates function is used to make all of the data sets. For the integer data, it creates an array with all values from 0 to the array size - 1 and then mixes the values. For string data, it uses the chance library to create an array of the given size with random strings. After each dataset is created, it is outputted to a .txt file with 1 value on each line using the fs library. All of the output files are named based on which dataset is in that file.
 
 ## Analysis
 
@@ -70,14 +70,16 @@ For large datasets quick sort and shell sort function very well at under 1 secon
 
 ### Upper Bounds
 
+To confirm the upper bounds for the algorithms, we used R to generate regression models from our data. To make each graph approximately linear, we scaled the x-axis (data set size) by the expected Big O for that algorithm. As seen in the graphs below, all of the algorithms except insertion sort and shell sort have R^2 values > 0.9, meaning that there is a strong linear relationship between the scaled dataset size and the time the algorithm took. The reason that insertion sort and shell sort have lower R^2 values is because these algorithms were much more efficient with the presorted and semisorted datasets than the rest, resulting in a less accurate regression model. The regression equations for each algorithm for both integer and string datasets can be found in the top left corner of the graphs.
+
+Note - Some of the graphs show an R^2 value of 1 because ggplot (the R library we used to generate the graphs) rounds the values to 2 decimal places. By looking at the placement of the points on the graphs, you will see that they are not all perfectly on the line so the R^2 is not exactly 1.
+
 <img src="./data/insertionRegression.svg" />
 <img src="./data/introRegression.svg" />
 <img src="./data/mergeRegression.svg" />
 <img src="./data/quickRegression.svg" />
 <img src="./data/shellRegression.svg" />
 <img src="./data/timRegression.svg" />
-
-...Using the coefficients we can see that quick sort is the best... (for section below)
 
 ### Best Algorithm
 
