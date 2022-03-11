@@ -45,8 +45,8 @@ ggsave("insertionRegression.svg")
 insertionInts = subset(insertionTimes, var_type == "int")
 ggplot(insertionInts, aes(x = size, y = insertion_time, color = format)) +
   geom_line() +
-  labs(title = "Insertion Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time (s)") +
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Insertion Sort Time With Integer Data By Data Set Size and Data Format", x = "n", y = "Insertion Sort Time (s)") +
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("insertionInts.svg")
 ```
 
@@ -54,8 +54,8 @@ ggsave("insertionInts.svg")
 insertionStrings = subset(insertionTimes, var_type == "string")
 ggplot(insertionStrings, aes(x = size, y = insertion_time, color = format)) +
   geom_line() +
-  labs(title = "Insertion Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Insertion Sort Time (s)") +
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Insertion Sort Time With String Data By Data Set Size and Data Format", x = "n", y = "Insertion Sort Time (s)") +
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("insertionStrings.svg")
 ```
 
@@ -86,8 +86,8 @@ ggsave("quickRegression.svg")
 quickInts = subset(quickTimes, var_type == "int")
 ggplot(quickInts, aes(x = size, y = quick_time, color = format)) + 
   geom_line() + 
-  labs(title = "Quick Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Quick Sort Time With Integer Data By Data Set Size and Data Format", x = "n", y = "Quick Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("quickInts.svg")
 ```
 
@@ -95,8 +95,8 @@ ggsave("quickInts.svg")
 quickStrings = subset(quickTimes, var_type == "string")
 ggplot(quickStrings, aes(x = size, y = quick_time, color = format)) + 
   geom_line() + 
-  labs(title = "Quick Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Quick Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Quick Sort Time With String Data By Data Set Size and Data Format", x = "n", y = "Quick Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("quickStrings.svg")
 ```
 
@@ -127,8 +127,8 @@ ggsave("mergeRegression.svg")
 mergeInts = subset(mergeTimes, var_type == "int")
 ggplot(mergeInts, aes(x = size, y = merge_time, color = format)) + 
   geom_line() + 
-  labs(title = "Merge Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Merge Sort Time With Integer Data By Data Set Size and Data Format", x = "n", y = "Merge Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("mergeInts.svg")
 ```
 
@@ -136,8 +136,8 @@ ggsave("mergeInts.svg")
 mergeStrings = subset(mergeTimes, var_type == "string")
 ggplot(mergeStrings, aes(x = size, y = merge_time, color = format)) + 
   geom_line() + 
-  labs(title = "Merge Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Merge Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Merge Sort Time With String Data By Data Set Size and Data Format", x = "n", y = "Merge Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("mergeStrings.svg")
 ```
 
@@ -168,8 +168,8 @@ ggsave("shellRegression.svg")
 shellInts = subset(shellTimes, var_type == "int")
 ggplot(shellInts, aes(x = size, y = shell_time, color = format)) + 
   geom_line() + 
-  labs(title = "Shell Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Shell Sort Time With Integer Data By Data Set Size and Data Format", x = "n", y = "Shell Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("shellInts.svg")
 ```
 
@@ -177,8 +177,8 @@ ggsave("shellInts.svg")
 shellStrings = subset(shellTimes, var_type == "string")
 ggplot(shellStrings, aes(x = size, y = shell_time, color = format)) + 
   geom_line() + 
-  labs(title = "Shell Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Shell Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Shell Sort Time With String Data By Data Set Size and Data Format", x = "n", y = "Shell Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("shellStrings.svg")
 ```
 
@@ -209,8 +209,8 @@ ggsave("introRegression.svg")
 introInts = subset(introTimes, var_type == "int")
 ggplot(introInts, aes(x = size, y = intro_time, color = format)) + 
   geom_line() + 
-  labs(title = "Intro Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Intro Sort Time With Integer Data By Data Set Size and Data Format", x = "n", y = "Intro Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("introInts.svg")
 ```
 
@@ -218,8 +218,8 @@ ggsave("introInts.svg")
 introStrings = subset(introTimes, var_type == "string")
 ggplot(introStrings, aes(x = size, y = intro_time, color = format)) + 
   geom_line() + 
-  labs(title = "Intro Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Intro Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Intro Sort Time With String Data By Data Set Size and Data Format", x = "n", y = "Intro Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("introStrings.svg")
 ```
 
@@ -250,8 +250,8 @@ ggsave("timRegression.svg")
 timInts = subset(timTimes, var_type == "int")
 ggplot(timInts, aes(x = size, y = tim_time, color = format)) + 
   geom_line() + 
-  labs(title = "Tim Sort Time With Integer Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Tim Sort Time With Integer Data By Data Set Size and Data Format", x = "n", y = "Tim Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("timInts.svg")
 ```
 
@@ -259,8 +259,8 @@ ggsave("timInts.svg")
 timStrings = subset(timTimes, var_type == "string")
 ggplot(timStrings, aes(x = size, y = tim_time, color = format)) + 
   geom_line() + 
-  labs(title = "Tim Sort Time With String Data By Data Set Size and File Format", x = "n", y = "Tim Sort Time (s)") + 
-  guides(color = guide_legend(title = "File Format"))
+  labs(title = "Tim Sort Time With String Data By Data Set Size and Data Format", x = "n", y = "Tim Sort Time (s)") + 
+  guides(color = guide_legend(title = "Data Format"))
 ggsave("timStrings.svg")
 ```
 

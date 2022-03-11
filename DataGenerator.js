@@ -1,3 +1,43 @@
+const random = new(require('chance'));
+const fs = require('fs');
+let sizes = [5000, 10000, 50000, 100000, 500000, 1000000];
+for (let i = 0; i < 2; i++) {
+    if (i == 0) {
+        console.log("Generating integer data sets...");
+    } else {
+        console.log("Generating string data sets...");
+    }
+    sizes.forEach(size => {
+        console.log(size, "size data sets");
+        console.log("No duplicates data set");
+        let file = "input/";
+        if (i == 0) {
+            file += "int";
+        } else {
+            file += "string";
+        }
+        file += "-noDuplicates-"
+        file += size.toString();
+        file += ".txt";
+        createOutput(noDuplicates(size, i, 0), file);
+        console.log("Sorted data set");
+        file = file.replace("noDuplicates", "sorted");
+        createOutput(sorted(size, i, 0), file);
+        console.log("60% sorted data set");
+        file = file.replace("sorted", "60sorted");
+        createOutput(sorted60(size, i, 0), file);
+        console.log("20% duplicates data set");
+        file = file.replace("60sorted", "20duplicates");
+        createOutput(duplicates(size, i, 0.2), file);
+        console.log("40% duplicates data set");
+        file = file.replace("20duplicates", "40duplicates");
+        createOutput(duplicates(size, i, 0.4), file);
+        console.log();
+    });
+}
+
+console.log("Done!");
+
 function noDuplicates(size, type, start) {
     if (type == 0) {
         if (start === 0) {
@@ -66,45 +106,3 @@ function createOutput(arr, file) {
         if (err) throw err;
     });
 }
-
-const random = new(require('chance'));
-const fs = require('fs');
-let sizes = [5000, 10000, 50000, 100000, 500000, 1000000];
-//let sizes = [5000]
-//let sizes = [5, 10];
-for (let i = 0; i < 2; i++) {
-    if (i == 0) {
-        console.log("Generating integer data sets...");
-    } else {
-        console.log("Generating string data sets...");
-    }
-    sizes.forEach(size => {
-        console.log(size, "size data sets");
-        console.log("No duplicates data set");
-        let file = "input/";
-        if (i == 0) {
-            file += "int";
-        } else {
-            file += "string";
-        }
-        file += "-noDuplicates-"
-        file += size.toString();
-        file += ".txt";
-        createOutput(noDuplicates(size, i, 0), file);
-        console.log("Sorted data set");
-        file = file.replace("noDuplicates", "sorted");
-        createOutput(sorted(size, i, 0), file);
-        console.log("60% sorted data set");
-        file = file.replace("sorted", "60sorted");
-        createOutput(sorted60(size, i, 0), file);
-        console.log("20% duplicates data set");
-        file = file.replace("60sorted", "20duplicates");
-        createOutput(duplicates(size, i, 0.2), file);
-        console.log("40% duplicates data set");
-        file = file.replace("20duplicates", "40duplicates");
-        createOutput(duplicates(size, i, 0.4), file);
-        console.log();
-    });
-}
-
-console.log("Done!");
