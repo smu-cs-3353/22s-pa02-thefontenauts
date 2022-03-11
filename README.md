@@ -35,7 +35,17 @@ For data generation we used javascript. Add more stuff here.
 
 For all sorting algorithms the presorted data was the best case scenario. However the magnitude difference was only noticable for insertion and shell sort. For semisorted data the difference in magnitude was also only noticeable for insertion and shell sort. The difference was less noticeable for shell sort than with the fully sorted dataset.
 
-Insert graphs here
+Note - The graphs below show only the integer data collected. The string data shows the same trends with a larger absolute timing. If you would like to view them please look in the data folder.
+<img src="./data/insertionInts.svg" />
+<img src="./data/introInts.svg" />
+<img src="./data/mergeInts.svg" />
+<img src="./data/quickInts.svg" />
+<img src="./data/shellInts.svg" />
+<img src="./data/timInts.svg" />
+
+### Duplicates
+
+From the graphs shown above we can also see that the sorts handle duplicates rather well. While there is a little variance in the timings between the 0%, 20%, and 40% duplicate datasets, the magnitudes of the times were on the same scale. The variance is most likely due to the data being ordered in a way that is slightly better or worse for the algorithms.
 
 ### String vs Ints
 
@@ -49,12 +59,6 @@ For large datasets quick sort and shell sort function very well at under 1 secon
 
 Instert graphs here
 
-### Duplicates
-
-All of the sorts handle duplicates rather well. While there is a little variance in the timings between the 0%, 20%, and 40% duplicate datasets, the magnitudes of the times were on the same scale. The variance is  most likely due to the data being ordered in a way that is slightly better or worse for the algorithms.
-
-Insert graphs here
-
 ### Upper Bounds
 
 Put R regressions here. 
@@ -63,7 +67,7 @@ Put R regressions here.
 
 ### Best Algorithm
 
-From the data we collected the best sorting algorithm is quick sort. The graphs below show all sorting algorithm average times except insertion as it was way magnitudes above all others. In both integers and strings, quick sort is shown to have the fastest sorting time proving it is the best of the algorithms we implemented
+From the data we collected the best sorting algorithm is quick sort. The graphs below show all sorting algorithm average times except insertion as it was magnitudes above all others. In both integers and strings, quick sort is shown to have the fastest sorting time proving it is the best of the algorithms we implemented
 
 <img src="./data/intMean2.svg" />
 <img src="./data/stringMean2.svg" />
