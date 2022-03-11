@@ -63,10 +63,8 @@ Put R regressions here.
 
 ### Best Algorithm
 
+From the data we collected the best sorting algorithm is quick sort. The graphs below show all sorting algorithm average times except insertion as it was way magnitudes above all others. In both integers and strings, quick sort is shown to have the fastest sorting time proving it is the best of the algorithms we implemented
+
 <img src="./data/intMean2.svg" />
+<img src="./data/stringMean2.svg" />
 
-From the data we collected the best sorting algorithm is quick sort. It consistently operates faster than the other algorithms. 
-
-```It also had the smallest coefficient for its upper bound.``` 
-
-CHECK IF THIS IS TRUE
