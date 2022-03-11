@@ -268,30 +268,32 @@ ggsave("timStrings.svg")
 ```{r}
 # Create new data frame that is restructured to have 1 time column
 data2 = matrix(ncol = 5, nrow = 360)
+row = 1
 # For each algorithm:
 for (i in 1:6) {
   # For each input file:
   for (j in 1:60) {
     # Set the first 3 cols to the corresponding cols from old dataset
-    data2[i * j, 1] = data[j, 1]
-    data2[i * j, 2] = data[j, 2]
-    data2[i * j, 3] = data[j, 3]
+    data2[row, 1] = data[j, 1]
+    data2[row, 2] = data[j, 2]
+    data2[row, 3] = data[j, 3]
     # Set the time from the correct algorithm
-    data2[i * j, 4] = data[j, 3 + i]
+    data2[row, 4] = data[j, 3 + i]
     # Set which algorithm this row is from
     if (i == 1) {
-      data2[i * j, 5] = "insertion"
+      data2[row, 5] = "insertion"
     } else if (i == 2) {
-      data2[i * j, 5] = "quick"
+      data2[row, 5] = "quick"
     } else if (i == 3) {
-      data2[i * j, 5] = "merge"
+      data2[row, 5] = "merge"
     } else if (i == 4) {
-      data2[i * j, 5] = "shell"
+      data2[row, 5] = "shell"
     } else if (i == 5) {
-      data2[i * j, 5] = "intro"
+      data2[row, 5] = "intro"
     } else {
-      data2[i * j, 5] = "tim"
+      data2[row, 5] = "tim"
     }
+    row = row + 1
   }
 }
 data2 = data.frame(data2)
