@@ -35,7 +35,8 @@ For data generation we used javascript. Add more stuff here.
 
 For all sorting algorithms the presorted data was the best case scenario. However the magnitude difference was only noticable for insertion and shell sort. For semisorted data the difference in magnitude was also only noticeable for insertion and shell sort. The difference was less noticeable for shell sort than with the fully sorted dataset.
 
-Note - The graphs below show only the integer data collected. The string data shows the same trends with a larger absolute timing. If you would like to view them please look in the data folder.
+Note - The graphs below show only the integer data collected. The string data shows the same trends on a larger timescale. If you would like to view them please look in the data folder.
+
 <img src="./data/insertionInts.svg" />
 <img src="./data/introInts.svg" />
 <img src="./data/mergeInts.svg" />
@@ -51,13 +52,19 @@ From the graphs shown above we can also see that the sorts handle duplicates rat
 
 As seen in the graphs below for all sorting algorithms the time to sort a string dataset was significantly longer than the time to sort the corresponding integer dataset.
 
-Insert graphs here
+<img src="./data/insertionMean.svg" />
+<img src="./data/introMean.svg" />
+<img src="./data/mergeMean.svg" />
+<img src="./data/quickMean.svg" />
+<img src="./data/shellMean.svg" />
+<img src="./data/timMean.svg" />
 
 ### Large Datasets
 
 For large datasets quick sort and shell sort function very well at under 1 second for 1 million ints and under 10 seconds for 1 million strings. Merge, intro, and tim sort were all in the same range and functioned slightly worse than quick and shell sorts. Insertion sort was by far the worst, taking over 5 hours on one testing machine and over 10 on another testing machine when sorting 1 million strings.
 
-Instert graphs here
+<img src="./data/intMean.svg" />
+<img src="./data/stringMean.svg" />
 
 ### Upper Bounds
 
