@@ -67,7 +67,12 @@ For large datasets quick sort and shell sort function very well at under 1 secon
 
 ### Upper Bounds
 
-Put R regressions here. 
+<img src="./data/insertionRegression.svg" />
+<img src="./data/introRegression.svg" />
+<img src="./data/mergeRegression.svg" />
+<img src="./data/quickRegression.svg" />
+<img src="./data/shellRegression.svg" />
+<img src="./data/timRegression.svg" />
 
 ...Using the coefficients we can see that quick sort is the best... (for section below)
 
