@@ -15,6 +15,7 @@ using namespace std;
 
 //opens the directory and grabs all the dataset files
 void FileManager::getFiles(char* folder, bool runInsert) {
+    cout << "Opening Directory..." << endl;
     // Get the path to the current directory
     char* p = new char[256];
     getcwd(p, 256);
@@ -39,6 +40,7 @@ void FileManager::getFiles(char* folder, bool runInsert) {
         }
         // Close the dirent object
         closedir(dr);
+
         // Call the function to read the files found in this function
         readFiles(runInsert);
     } else {
@@ -50,6 +52,7 @@ void FileManager::getFiles(char* folder, bool runInsert) {
 
 //grab datasets from the files
 void FileManager::readFiles(bool runInsert) {
+    cout << "Files Found, Opening Files..." << endl;
     ifstream input;
     //go through all files found in the above directory
     for (string& file : files) {
@@ -107,6 +110,7 @@ void FileManager::readFiles(bool runInsert) {
         }
     }
 
+    cout << "Files Parsed" << endl;
     //run the output
     createOutput(runInsert);
 }
@@ -118,6 +122,7 @@ void FileManager::createOutput(bool runInsert) {
     output << "var_type,size,format,insertion_time,quick_time,merge_time,shell_time,intro_time,tim_time" << endl;
     Algorithms<int> intSort;
 
+    cout << "\nStarting Int Sort..." << endl;
     //Goes through each dataset and runs the algorithms with it. The checker will exit if sorting fails.
     for (DataSet<int>& ds : iData) {
         output << ds;
@@ -134,6 +139,10 @@ void FileManager::createOutput(bool runInsert) {
         output << intSort.introSort(ds.getData()).count() << ",";
         output << intSort.timSort(ds.getData()).count() << endl;
     }
+
+    cout << "Finished Int Sort" << endl;
+
+    cout << "\nStarting String Sort..." << endl;
 
     //same for the strings
     Algorithms<string> stringSort;
@@ -153,4 +162,5 @@ void FileManager::createOutput(bool runInsert) {
         output << stringSort.timSort(ds.getData()).count() << endl;
     }
     output.close();
+    cout << "Finished String Sort" << endl;
 }
