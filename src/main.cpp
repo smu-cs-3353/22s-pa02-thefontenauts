@@ -7,6 +7,7 @@
  */
 
 #include <iostream>
+#include <cstring>
 #include "FileManager.h"
 using namespace std;
 
