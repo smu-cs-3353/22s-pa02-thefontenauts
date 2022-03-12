@@ -33,6 +33,8 @@ To generate the random data for this project, we wrote a JavaScript program and 
 
 ## Analysis
 
+Note - All of the graphs seen below were generated with R. See the data folder to find the dataset used to generate the graphs, an excel spreadsheet with all the data we collected, and the R markdown file used to generate the graphs.
+
 ### Randomized vs Presorted vs Semisorted
 
 For all sorting algorithms the presorted data was the best case scenario. However the magnitude difference was only noticable for insertion and shell sort. For semisorted data the difference in magnitude was also only noticeable for insertion and shell sort. This difference was less noticeable for shell sort than with the fully sorted dataset.
