@@ -33,6 +33,8 @@ public:
     // Intro Sort Functions
     std::chrono::duration<double> introSort(vector<T>);
     vector<T> introSort(vector<T>, int);
+    void toHeapify(vector<T>&,int,int);
+    void makeMaxHeap(vector<T>&,int);
 
     //Quick Sort functions
     std::chrono::duration<double> quickSort_caller(vector<T>);
@@ -229,8 +231,49 @@ vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
         insertionSort(data);
         return data;
     } else if (depth == 0) {
-        make_heap(data.begin(), data.end());
-        sort_heap(data.begin(), data.end());
+
+        //heap sort
+        //then keep popping off elements and putting them in the last index
+        //basically form the array from back to front
+
+
+        //create max heap with data vector.
+        //since heaps start at element 1 push back the element 0 to the end so it also gets sorted.
+        //In this implementation element 0 will be a buffer variable to hold the max value so there does not
+        // need to be rearranged after the sort
+        data.push_back(data[0]);
+
+        //make max heap
+        makeMaxHeap(data, data.size());
+
+        for (int i = data.size()-1; i >= 2; i--)
+        {
+
+            //temp is used to grab the buffer and put it in the sorted position
+            T temp;
+            if(i != data.size()-1)
+                temp = data[0];
+
+            //put the curr max into buffer slot
+            data[0] = data[1];
+            data[1] = data[i];
+
+            //put temp into sorted position
+            if(i != data.size()-1)
+                data[i] = temp;
+
+            //Build max heap of remaining element.
+            toHeapify(data, 1, i - 1);
+        }
+
+        //since slot 0 is a buffer swap the
+        T temp = data[0];
+        data[0] = data[1];
+        data[1] = temp;
+
+        //pop the last position that allowed us to use proper heap indices
+        data.pop_back();
+
         return data;
     } else {
         int part = partition(data, 0, data.size() - 1);
@@ -242,6 +285,37 @@ vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
         first.insert(first.end(), last.begin(), last.end());
         return first;
     }
+}
+
+template <typename T>
+void Algorithms<T>::makeMaxHeap(vector<T>& data, int n)
+{
+    int i;
+    for(i = n/2; i >= 1; i--)
+        toHeapify(data, i, n);
+}
+
+template <typename T>
+void Algorithms<T>::toHeapify(vector<T>& data, int i, int n)
+{
+    T temp = data[i];
+    int j = 2*i;
+
+    while (j <= n)
+    {
+        if (j < n && data[j+1] > data[j])
+            j = j+1;
+        // Break if parent value is already greater than child value.
+        if (temp > data[j])
+            break;
+        // Switching value with the parent node if temp < a[j].
+        else if (temp <= data[j])
+        {
+            data[j/2] = data[j];
+            j = 2*j;
+        }
+    }
+    data[j/2] = temp;
 }
 
 //Quick Sort Functions
