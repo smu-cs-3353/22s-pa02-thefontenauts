@@ -231,7 +231,6 @@ vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
         insertionSort(data);
         return data;
     } else if (depth == 0) {
-
         //heap sort
         //then keep popping off elements and putting them in the last index
         //basically form the array from back to front
@@ -244,7 +243,7 @@ vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
         data.push_back(data[0]);
 
         //make max heap
-        makeMaxHeap(data, data.size());
+        makeMaxHeap(data, data.size()-1);
 
         for (int i = data.size()-1; i >= 2; i--)
         {
