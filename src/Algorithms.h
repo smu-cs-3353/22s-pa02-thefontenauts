@@ -53,13 +53,18 @@ template <typename T>
 std::chrono::duration<double> Algorithms<T>::insertionSort(vector<T>& data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
+    // Loop from 1 to the dataset size - 1
     for (int i = 1; i < data.size(); i++) {
+        // Set the key to the current value and j to the current index - 1
         T key = data.at(i);
         int j = i - 1;
+        // Loop until j == 0 or the value at j is less than or equal to the key
         while (j >= 0 && data.at(j) > key) {
+            // Set value at j + 1 to the value at j and decrement j
             data.at(j + 1) = data.at(j);
             j -= 1;
         }
+        // Set value at j + 1 to key
         data.at(j + 1) = key;
     }
     end = std::chrono::high_resolution_clock::now();
@@ -129,11 +134,13 @@ void Algorithms<T>::shellSort(vector<T>& data)
     }
 }
 
+// Intro sort caller
 template <typename T>
 std::chrono::duration<double> Algorithms<T>::introSort(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
 
+    // Calculate the depth
     int depth = 2 * log(data.size());
     data = introSort(data, depth);
 
@@ -151,28 +158,35 @@ std::chrono::duration<double> Algorithms<T>::timSort(vector<T> data) {
     std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
     start = std::chrono::high_resolution_clock::now();
 
+    // Create a 3d vector to hold sections to be merged
     vector<vector<vector<T> > > sections(1);
     int i;
+    // Create sections of size 32 that are sorted with insertion sort
     for (i = 0; i < data.size(); i += 32) {
         vector<T> temp(data.begin() + i, data.begin() + min(i + 32, int(data.size())));
         insertionSort(temp);
         sections.at(0).push_back(temp);
     }
-
+    // Iterative merge sort
     for (i = 0; i < sections.size(); i++) {
+        // If there is 1 section, end the loop
         if (sections.at(i).size() == 1) {
             break;
         }
+        // Create a 2d vector to store the merged sectiosn
         vector<vector<T> > curr;
         int j;
+        // Merge every other value
         for (j = 1; j < sections.at(i).size(); j += 2) {
             vector<T> temp = merge(sections.at(i).at(j - 1), sections.at(i).at(j));
             curr.push_back(temp);
         }
+        // If there is one section left, add it to the next section
         if (j == sections.at(i).size()) {
             vector<T> temp = sections.at(i).at(j - 1);
             curr.push_back(temp);
         }
+        // Add the new set of sections
         sections.push_back(curr);
     }
     data = sections.at(sections.size() - 1).at(0);
@@ -189,34 +203,48 @@ std::chrono::duration<double> Algorithms<T>::timSort(vector<T> data) {
 // Merge Sort Functions
 template <typename T>
 vector<T> Algorithms<T>::mergeSort(vector<T> data) {
+    // If there is more than 1 element in data, split data
     if (data.size() > 1) {
+        // The halfway point is the size / 2
         int half = (data.size() / 2);
+        // Create the first half of data
         vector<T> first(data.begin(), data.begin() + half);
+        // Call merge sort for the first half
         first = mergeSort(first);
+        // Create the second half of data
         vector<T> second(data.begin() + half, data.end());
+        // Call merge sort for the second half
         second = mergeSort(second);
+        // Merge the two halves
         return merge(first, second);
     } else {
+        // Else, return data
         return data;
     }
 }
 
 template <typename T>
 vector<T> Algorithms<T>::merge(vector<T>& first, vector<T>& second) {
+    // Set the iterators for both halves to 0
     int it1 = 0;
     int it2 = 0;
     vector<T> merged;
+    // Iterate while either iterator is less than the size of that half
     while (it1 < first.size() || it2 < second.size()) {
         if (it1 >= first.size()) {
+            // If first is done, add the next value of second
             merged.push_back(second.at(it2));
             it2++;
         } else if (it2 >= second.size()) {
+            // If second is done, add the next value of first
             merged.push_back(first.at(it1));
             it1++;
         } else if (first.at(it1) < second.at(it2)) {
+            // If the current value of first is smaller, add it
             merged.push_back(first.at(it1));
             it1++;
         } else {
+            // If the current value of second is smaller or equal, add it
             merged.push_back(second.at(it2));
             it2++;
         }
@@ -228,6 +256,7 @@ vector<T> Algorithms<T>::merge(vector<T>& first, vector<T>& second) {
 template <typename T>
 vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
     if (data.size() < 16) {
+        // If data is small, do insertion sort
         insertionSort(data);
         return data;
     } else if (depth == 0) {
@@ -275,6 +304,7 @@ vector<T> Algorithms<T>::introSort(vector<T> data, int depth) {
 
         return data;
     } else {
+        // Quick sort with intro sort
         int part = partition(data, 0, data.size() - 1);
         vector<T> first(data.begin(), data.begin() + part);
         first = introSort(first, depth - 1);
